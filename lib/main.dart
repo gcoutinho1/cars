@@ -11,9 +11,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.pink,
+        // primarySwatch: Colors.white,
+        accentColor: Colors.white,
         brightness: Brightness.dark,
-        scaffoldBackgroundColor: Colors.black45
+        // scaffoldBackgroundColor: Colors.black45
       ),
       home: LoginPage(),
     );
