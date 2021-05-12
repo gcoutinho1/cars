@@ -1,10 +1,20 @@
+import 'package:cars/pages/home_page.dart';
+import 'package:cars/pages/login_api.dart';
+import 'package:cars/utils/nav.dart';
 import 'package:cars/widgets/button.dart';
 import 'package:cars/widgets/text.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final _controllerUser = TextEditingController();
+
   final _controllerPassword = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -54,8 +64,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-
-  _onPressedLogin() {
+  _onPressedLogin() async {
     bool formWorking = _formKey.currentState.validate();
     if (!formWorking) {
       return;
@@ -65,6 +74,13 @@ class LoginPage extends StatelessWidget {
     String password = _controllerPassword.text;
 
     print("Login: $login, Senha: $password");
+    bool ok = await LoginApi.login(login, password);
+
+    if (ok) {
+      push(context, HomePage());
+    } else {
+      print("Login incorreto");
+    }
   }
 
   String _validateLogin(String text) {
