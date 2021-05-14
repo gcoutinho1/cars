@@ -15,10 +15,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _controllerUser = TextEditingController();
-
   final _controllerPassword = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
+  bool _showProgress = false;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +59,15 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: 20,
             ),
-            AppButton("Login", onPressed: _onPressedLogin),
+            _showProgress
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : AppButton(
+                    "Login",
+                    onPressed: _onPressedLogin,
+                    showProgress: _showProgress,
+                  ),
           ],
         ),
       ),
@@ -76,7 +83,10 @@ class _LoginPageState extends State<LoginPage> {
     String login = _controllerUser.text;
     String password = _controllerPassword.text;
 
-    print("Login: $login, Senha: $password");
+    // print("Login: $login, Senha: $password");
+    setState(() {
+      _showProgress = true;
+    });
     ApiResponse response = await LoginApi.login(login, password);
 
     if (response.working) {
@@ -87,6 +97,10 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       alert(context, response.message);
     }
+
+    setState(() {
+      _showProgress = false;
+    });
   }
 
   String _validateLogin(String text) {
