@@ -1,7 +1,7 @@
 import 'package:cars/pages/api_response.dart';
-import 'package:cars/pages/home_page.dart';
-import 'package:cars/pages/login_api.dart';
-import 'package:cars/pages/usuario.dart';
+import 'package:cars/pages/cars/home_page.dart';
+import 'package:cars/pages/login/login_api.dart';
+import 'package:cars/pages/login/user.dart';
 import 'package:cars/utils/alert_dialog.dart';
 import 'package:cars/utils/nav.dart';
 import 'package:cars/widgets/button.dart';
@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
     ApiResponse response = await LoginApi.login(login, password);
 
     if (response.working) {
-      Usuario user = response.result;
+      User user = response.result;
       print(">>> $user");
 
       push(context, HomePage(), replace: true);

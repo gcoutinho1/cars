@@ -1,4 +1,4 @@
-class Usuario {
+class User {
   String login;
   String nome;
   String email;
@@ -6,7 +6,7 @@ class Usuario {
 
   List<String> roles;
 
-  Usuario.fromJson(Map<String, dynamic> map)
+  User.fromJson(Map<String, dynamic> map)
       : login = map["login"],
         nome = map["nome"],
         email = map["email"],
@@ -15,6 +15,6 @@ class Usuario {
 
   @override
   String toString() {
-    return 'Usuario{login: $login, nome: $nome, email: $email, token: $token, roles: $roles}';
+    return 'User{login: $login, nome: $nome, email: $email, token: $token, roles: $roles}';
   }
 }
