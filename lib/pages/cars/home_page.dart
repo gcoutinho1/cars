@@ -18,31 +18,62 @@ class HomePage extends StatelessWidget {
 
   _body() {
     List<Cars> cars = CarsApi.getCars();
-    return ListView.builder(
-        itemCount: cars.length,
-        itemBuilder: (context, index) {
-          Cars c = cars[index];
+    return Container(
+      padding: EdgeInsets.all(16),
+      child: ListView.builder(
+          itemCount: cars.length,
+          itemBuilder: (context, index) {
+            Cars c = cars[index];
 
-          return Row(
-            children: [
-              Image.network(
-                c.urlFoto,
-                width: 110,
+            return Card(
+              // color: Colors.pink[400],
+              child: Container(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Image.network(
+                        c.urlFoto,
+                        width: 220,
+                      ),
+                    ),
+                    Text(
+                      c.nome,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    Text("description test..."),
+                    ButtonBarTheme(
+                      data: ButtonBarTheme.of(context),
+                      child: ButtonBar(
+                        children: <Widget>[
+                          TextButton(
+                            child: const Text('DETAILS'),
+                            onPressed: () {
+                              /* ... */
+                            },
+                          ),
+                          TextButton(
+                            child: const Text('SHARE'),
+                            onPressed: () {
+                              /* ... */
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              Flexible(
-                  child: Text(
-                c.nome,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 20),
-              )),
-            ],
-          );
+            );
 
-          // return ListTile(
-          //   leading: Image.network(c.urlFoto),
-          //   title: Text(c.nome,style: TextStyle(fontSize: 20),),
-          // );
-        });
+            // return ListTile(
+            //   leading: Image.network(c.urlFoto),
+            //   title: Text(c.nome,style: TextStyle(fontSize: 20),),
+            // );
+          }),
+    );
   }
 }
