@@ -47,7 +47,7 @@ class HomePage extends StatelessWidget {
                   children: [
                     Center(
                       child: Image.network(
-                        c.urlFoto,
+                        c.urlFoto ?? "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
                         width: 220,
                       ),
                     ),
