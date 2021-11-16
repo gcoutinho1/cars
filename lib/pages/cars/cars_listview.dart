@@ -4,6 +4,9 @@ import 'cars.dart';
 import 'cars_api.dart';
 
 class CarsListView extends StatelessWidget {
+  String tipo;
+
+  CarsListView(this.tipo);
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +14,7 @@ class CarsListView extends StatelessWidget {
   }
 
   _body() {
-    Future<List<Cars>> cars = CarsApi.getCars();
+    Future<List<Cars>> cars = CarsApi.getCars(tipo);
     return FutureBuilder(
       future: cars,
       builder: (BuildContext context, AsyncSnapshot<List<Cars>> snapshot) {
@@ -41,7 +44,7 @@ class CarsListView extends StatelessWidget {
                   children: [
                     Center(
                       child: Image.network(
-                        c.urlFoto ?? "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                        c.urlFoto ?? "https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg?cs=srgb&dl=pexels-alexgtacar-1592384.jpg&fm=jpg",
                         width: 220,
                       ),
                     ),

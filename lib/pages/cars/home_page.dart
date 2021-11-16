@@ -20,9 +20,9 @@ class HomePage extends StatelessWidget {
           ],),
         ),
         body: TabBarView(children: [
-          CarsListView(),
-          CarsListView(),
-          CarsListView(),
+          CarsListView(TipoCarro.classicos),
+          CarsListView(TipoCarro.esportivos),
+          CarsListView(TipoCarro.luxo),
         ],),
         drawer: DrawerList(),
       ),
