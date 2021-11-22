@@ -1,5 +1,6 @@
+import 'package:cars/pages/cars/car_detail.dart';
+import 'package:cars/utils/nav.dart';
 import 'package:flutter/material.dart';
-
 import 'cars.dart';
 import 'cars_api.dart';
 
@@ -81,9 +82,9 @@ class _CarsListViewState extends State<CarsListView>
                       child: ButtonBar(
                         children: <Widget>[
                           TextButton(
-                            child: const Text('DETAILS'),
+                            child: const Text('DETALHES'),
                             onPressed: () {
-                              /* ... */
+                              _onClickCar(c);
                             },
                           ),
                           TextButton(
@@ -106,5 +107,9 @@ class _CarsListViewState extends State<CarsListView>
             // );
           }),
     );
+  }
+
+  void _onClickCar(Cars c) {
+    push(context, CarDetail(c));
   }
 }
