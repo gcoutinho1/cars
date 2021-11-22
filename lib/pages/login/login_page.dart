@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:cars/pages/api_response.dart';
 import 'package:cars/pages/cars/home_page.dart';
 import 'package:cars/pages/login/login_api.dart';
@@ -14,10 +15,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _streamController = StreamController<bool>();
   final _controllerUser = TextEditingController();
   final _controllerPassword = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  bool _showProgress = false;
 
   @override
   void initState() {
@@ -74,15 +75,18 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: 20,
             ),
-            _showProgress
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : AppButton(
+            // Center(
+            //        child: CircularProgressIndicator(),
+            //      )
+            StreamBuilder<bool>(
+                stream: _streamController.stream,
+                builder: (context, snapshot) {
+                  return AppButton(
                     "Login",
                     onPressed: _onPressedLogin,
-                    showProgress: _showProgress,
-                  ),
+                    showProgress: snapshot.data ?? false,
+                  );
+                }),
           ],
         ),
       ),
@@ -97,25 +101,18 @@ class _LoginPageState extends State<LoginPage> {
 
     String login = _controllerUser.text;
     String password = _controllerPassword.text;
-
-    // print("Login: $login, Senha: $password");
-    setState(() {
-      _showProgress = true;
-    });
+    _streamController.add(true);
     ApiResponse response = await LoginApi.login(login, password);
 
     if (response.working) {
-      User user = response.result;
-      print(">>> $user");
+      // User user = response.result;
 
       push(context, HomePage(), replace: true);
     } else {
       alert(context, response.message);
     }
 
-    setState(() {
-      _showProgress = false;
-    });
+    _streamController.add(false);
   }
 
   String _validateLogin(String text) {
@@ -129,6 +126,15 @@ class _LoginPageState extends State<LoginPage> {
     if (text.isEmpty) {
       return "Informe a senha";
     }
+    if (text.length < 3) {
+      return "A senha precisa ter no minimo 3 números";
+    }
     return null;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _streamController.close();
   }
 }

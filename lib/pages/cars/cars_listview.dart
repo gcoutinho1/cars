@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:cars/pages/cars/car_detail.dart';
 import 'package:cars/utils/nav.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class CarsListView extends StatefulWidget {
 class _CarsListViewState extends State<CarsListView>
     with AutomaticKeepAliveClientMixin<CarsListView> {
   List<Cars> cars;
+  final _streamController = StreamController<List<Cars>>();
 
   @override
   bool get wantKeepAlive => true;
@@ -23,25 +25,40 @@ class _CarsListViewState extends State<CarsListView>
   @override
   void initState() {
     super.initState();
-    Future<List<Cars>> future = CarsApi.getCars(widget.tipo);
-    future.then((List<Cars> cars) {
-      setState(() {
-        this.cars = cars;
-      });
-    });
+    _loadCars();
+  }
+
+  _loadCars() async {
+    List<Cars> cars = await CarsApi.getCars(widget.tipo);
+    _streamController.add(cars);
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
-    if (cars == null) {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    }
-
-    return _listViewCars(cars);
+    print("Carros listView build ${widget.tipo}");
+    return StreamBuilder(
+        stream: _streamController.stream,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                "Não foi possível buscar a lista de carros",
+                style: TextStyle(
+                  color: Colors.redAccent,
+                  fontSize: 22,
+                ),
+              ),
+            );
+          }
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          List<Cars> cars = snapshot.data;
+          return _listViewCars(cars);
+        });
   }
 
   Container _listViewCars(List<Cars> cars) {
@@ -107,5 +124,11 @@ class _CarsListViewState extends State<CarsListView>
 
   void _onClickCar(Cars c) {
     push(context, CarDetail(c));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _streamController.close();
   }
 }
