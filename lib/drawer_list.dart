@@ -1,38 +1,35 @@
 import 'package:cars/pages/login/login_page.dart';
+import 'package:cars/pages/login/user.dart';
 import 'package:cars/utils/nav.dart';
 import 'package:flutter/material.dart';
 
 class DrawerList extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
+    Future<User> future = User.get();
     return Drawer(
       child: ListView(
         children: [
           // FlutterLogo(size: 50,),
-          UserAccountsDrawerHeader(
-              accountName: Text("Guilherme Coutinho"),
-              accountEmail: Text("guilherme@gmail.com"),
-              currentAccountPicture: CircleAvatar(
-                backgroundImage: NetworkImage("https://cdn.imgbin.com/3/12/17/imgbin-computer-icons-avatar-user-login-avatar-man-wearing-blue-shirt-illustration-mJrXLG07YnZUc2bH5pGfFKUhX.jpg"),
-              ),
-
-          ),
+          FutureBuilder<User>(
+              future: future,
+              builder: (context, snapshot){
+                User user = snapshot.data;
+                return user != null ? _header(user) : Container();
+              }),
           ListTile(
             leading: Icon(Icons.star),
             title: Text("Favoritos"),
             subtitle: Text("Adicione aos favoritos"),
             trailing: Icon(Icons.arrow_forward),
-            onTap: (){
-            },
+            onTap: () {},
           ),
           ListTile(
             leading: Icon(Icons.help),
             title: Text("Ajuda"),
             subtitle: Text("Selecione para obter ajuda"),
             trailing: Icon(Icons.arrow_forward),
-            onTap: (){
-            },
+            onTap: () {},
           ),
           ListTile(
             leading: Icon(Icons.logout),
@@ -46,7 +43,18 @@ class DrawerList extends StatelessWidget {
     );
   }
 
+  UserAccountsDrawerHeader _header(User user) {
+    return UserAccountsDrawerHeader(
+      accountName: Text(user.nome),
+      accountEmail: Text(user.email),
+      currentAccountPicture: CircleAvatar(
+        backgroundImage: NetworkImage(user.urlFoto),
+      ),
+    );
+  }
+
   _onClickLogout(BuildContext context) {
+    User.clear();
     Navigator.pop(context);
     push(context, LoginPage(), replace: true);
   }

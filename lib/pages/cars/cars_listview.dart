@@ -12,7 +12,8 @@ class CarsListView extends StatefulWidget {
   _CarsListViewState createState() => _CarsListViewState();
 }
 
-class _CarsListViewState extends State<CarsListView> with AutomaticKeepAliveClientMixin<CarsListView> {
+class _CarsListViewState extends State<CarsListView>
+    with AutomaticKeepAliveClientMixin<CarsListView> {
   @override
   bool get wantKeepAlive => true;
 
@@ -27,8 +28,18 @@ class _CarsListViewState extends State<CarsListView> with AutomaticKeepAliveClie
     return FutureBuilder(
       future: cars,
       builder: (BuildContext context, AsyncSnapshot<List<Cars>> snapshot) {
-        if(!snapshot.hasData){
-          return Center(child: CircularProgressIndicator(),);
+        if (snapshot.hasError) {
+          return Center(
+            child: Text(
+              "Não foi possível buscar a lista de carros",
+              style: TextStyle(color: Colors.redAccent, fontSize: 22),
+            ),
+          );
+        }
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
         List<Cars> cars = snapshot.data;
         return _listViewCars(cars);
@@ -53,7 +64,8 @@ class _CarsListViewState extends State<CarsListView> with AutomaticKeepAliveClie
                   children: [
                     Center(
                       child: Image.network(
-                        c.urlFoto ?? "https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg?cs=srgb&dl=pexels-alexgtacar-1592384.jpg&fm=jpg",
+                        c.urlFoto ??
+                            "https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg?cs=srgb&dl=pexels-alexgtacar-1592384.jpg&fm=jpg",
                         width: 220,
                       ),
                     ),
