@@ -5,6 +5,8 @@ import 'package:cars/pages/cars/cars_listview.dart';
 import 'package:cars/utils/prefs.dart';
 import 'package:flutter/material.dart';
 
+import 'cars_page.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -53,9 +55,9 @@ class _HomePageState extends State<HomePage>
       body: TabBarView(
         controller: _tabController,
         children: [
-          CarsListView(TipoCarro.classicos),
-          CarsListView(TipoCarro.esportivos),
-          CarsListView(TipoCarro.luxo),
+          CarrosPage(TipoCarro.classicos),
+          CarrosPage(TipoCarro.esportivos),
+          CarrosPage(TipoCarro.luxo),
         ],
       ),
       drawer: DrawerList(),
