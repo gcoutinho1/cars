@@ -32,6 +32,7 @@
 /build/
 /lib/pages/login/login_api.dart
 /lib/pages/cars/cars_api.dart
+/lib/pages/cars/description_api.dart
 
 # Web related
 lib/generated_plugin_registrant.dart
