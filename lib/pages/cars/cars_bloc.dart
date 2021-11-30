@@ -8,10 +8,11 @@ class CarsBloc {
 
   Stream<List<Cars>> get stream => _streamController.stream;
 
-  loadCars(String tipo) async {
+  Future<List<Cars>> loadCars(String tipo) async {
     try {
       List<Cars> cars = await CarsApi.getCars(tipo);
       _streamController.add(cars);
+      return cars;
     } catch (e) {
       _streamController.addError(e);
     }

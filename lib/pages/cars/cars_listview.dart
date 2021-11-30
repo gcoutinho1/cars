@@ -48,7 +48,10 @@ class _CarsListViewState extends State<CarsListView>
             );
           }
           List<Cars> cars = snapshot.data;
-          return _listViewCars(cars);
+          return RefreshIndicator(
+            onRefresh: _onRefresh,
+            child: _listViewCars(cars),
+          );
         });
   }
 
@@ -80,7 +83,7 @@ class _CarsListViewState extends State<CarsListView>
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontSize: 20),
                     ),
-                    Text("description test..."),
+                    Text("Descrição teste..."),
                     ButtonBarTheme(
                       data: ButtonBarTheme.of(context),
                       child: ButtonBar(
@@ -92,7 +95,7 @@ class _CarsListViewState extends State<CarsListView>
                             },
                           ),
                           TextButton(
-                            child: const Text('SHARE'),
+                            child: const Text('COMPARTILHAR'),
                             onPressed: () {
                               /* ... */
                             },
@@ -117,5 +120,23 @@ class _CarsListViewState extends State<CarsListView>
     push(context, CarDetail(c));
   }
 
+
+  Future<void> _onRefresh() {
+    return _bloc.loadCars(widget.tipo);
+
+
+    // teste RefreshIndicator
+    // return Future.delayed(Duration(seconds: 3), (){
+    //   print("Fim ${widget.tipo}");
+    // });
+
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _bloc.dispose();
+
+  }
 
 }
