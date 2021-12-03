@@ -24,16 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    Future<User> future = User.get();
-    future.then((User user) {
-      if (user != null) {
-        // abaixo código exemplo para manter o usuario conectado
-        push(context, HomePage(), replace: true);
-        // setState(() {
-        //   _controllerUser.text = user.login;
-        // });
-      }
-    });
+
   }
 
   @override
