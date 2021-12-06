@@ -1,25 +1,18 @@
 import 'dart:async';
-import 'package:cars/pages/cars/cars_bloc.dart';
+import 'package:cars/pages/cars/cars.dart';
 import 'package:cars/pages/cars/cars_listview.dart';
 import 'package:cars/widgets/text_error.dart';
 import 'package:flutter/material.dart';
-import 'cars.dart';
+import 'favorite_bloc.dart';
 
-class CarrosPage extends StatefulWidget {
-  String tipo;
-
-  CarrosPage(this.tipo);
-
+class FavoritePage extends StatefulWidget {
   @override
-  _CarrosPageState createState() => _CarrosPageState();
+  _FavoritePageState createState() => _FavoritePageState();
 }
 
-class _CarrosPageState extends State<CarrosPage>
-    with AutomaticKeepAliveClientMixin<CarrosPage> {
-  List<Cars> cars;
-
-  String get tipo => widget.tipo;
-  final _bloc = CarsBloc();
+class _FavoritePageState extends State<FavoritePage>
+    with AutomaticKeepAliveClientMixin<FavoritePage> {
+  final _bloc = FavoriteBloc();
 
   @override
   bool get wantKeepAlive => true;
@@ -27,18 +20,17 @@ class _CarrosPageState extends State<CarrosPage>
   @override
   void initState() {
     super.initState();
-    _bloc.loadCars(tipo);
+    _bloc.fetch();
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    print("Carros listView build ${tipo}");
     return StreamBuilder(
         stream: _bloc.stream,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return TextError("Não foi possível buscar a lista de carros");
+            return TextError("Não foi possível buscar os seus favoritos");
           }
           if (!snapshot.hasData) {
             return Center(
@@ -47,14 +39,12 @@ class _CarrosPageState extends State<CarrosPage>
           }
           List<Cars> cars = snapshot.data;
           return RefreshIndicator(
-              onRefresh: _onRefresh,
-              child: CarsListView(cars));
+              onRefresh: _onRefresh, child: CarsListView(cars));
         });
   }
 
   Future<void> _onRefresh() {
-    return _bloc.loadCars(widget.tipo);
-
+    return _bloc.fetch();
   }
 
   @override

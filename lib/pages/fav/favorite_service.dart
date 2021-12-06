@@ -19,5 +19,11 @@ class FavoriteService {
 
 }
 
+  static List<Cars> getCars(){
+    List<Cars> cars = [];
+    return cars;
+
+  }
+
 
 }

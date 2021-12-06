@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cars/pages/cars/description_api.dart';
 import 'package:cars/pages/cars/description_bloc.dart';
 import 'package:cars/pages/fav/favorite_service.dart';
 import 'package:cars/widgets/text_style.dart';
