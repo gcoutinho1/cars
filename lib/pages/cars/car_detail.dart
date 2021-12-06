@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cars/pages/cars/description_api.dart';
 import 'package:cars/pages/cars/description_bloc.dart';
 import 'package:cars/widgets/text_style.dart';
@@ -65,7 +66,7 @@ class _CarDetailState extends State<CarDetail> {
         padding: EdgeInsets.all(16),
         child: ListView(
           children: <Widget>[
-            Image.network(widget.car.urlFoto),
+            CachedNetworkImage(imageUrl: widget.car.urlFoto),
             bloco1(),
             Divider(),
             bloco2(),
