@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-alert(BuildContext context, String message) {
+alert(BuildContext context, String message, {Function callback}) {
   showDialog(
       //barrierDismissible para não permitir fechar o AlertDialog clicando fora dele
       barrierDismissible: false,
@@ -14,10 +14,14 @@ alert(BuildContext context, String message) {
             content: Text(message),
             actions: [
               TextButton(
+                  child: Text("Ok"),
                   onPressed: () {
                     Navigator.pop(context);
+                    if(callback != null) {
+                      callback();
+                    }
                   },
-                  child: Text("Ok")),
+                  ),
             ],
           ),
         );

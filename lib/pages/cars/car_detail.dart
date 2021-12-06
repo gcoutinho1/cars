@@ -1,10 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cars/pages/cars/car_form_page.dart';
 import 'package:cars/pages/cars/description_bloc.dart';
 import 'package:cars/pages/fav/favorite_service.dart';
+import 'package:cars/utils/alert_dialog.dart';
+import 'package:cars/utils/nav.dart';
 import 'package:cars/widgets/text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../api_response.dart';
 import 'cars.dart';
+import 'cars_api.dart';
 
 class CarDetail extends StatefulWidget {
   Cars car;
@@ -21,10 +26,11 @@ class _CarDetailState extends State<CarDetail> {
   Color color = Colors.grey;
 
   Cars get car => widget.car;
+
   @override
   void initState() {
     super.initState();
-    FavoriteService.isFavorite(car).then((bool favorite){
+    FavoriteService.isFavorite(car).then((bool favorite) {
       setState(() {
         color = favorite ? Colors.red : Colors.grey;
       });
@@ -75,7 +81,9 @@ class _CarDetailState extends State<CarDetail> {
         padding: EdgeInsets.all(16),
         child: ListView(
           children: <Widget>[
-            CachedNetworkImage(imageUrl: widget.car.urlFoto),
+            CachedNetworkImage(
+                imageUrl: widget.car.urlFoto ??
+                    "https://images.pexels.com/photos/8740896/pexels-photo-8740896.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"),
             bloco1(),
             Divider(),
             bloco2(),
@@ -125,10 +133,10 @@ class _CarDetailState extends State<CarDetail> {
   _onClickPopupMenu(String value) {
     switch (value) {
       case "Editar":
-        print("Editar!!");
+        push(context, CarFormPage(car: car));
         break;
       case "Deletar":
-        print("Deletaaa!!");
+        delete();
         break;
       case "Compartilhar":
         print("Compartilha ai!");
@@ -171,10 +179,20 @@ class _CarDetailState extends State<CarDetail> {
     );
   }
 
+  void delete() async {
+    ApiResponse<bool> response = await CarsApi.delete(car);
+    if (response.working) {
+      alert(context, "Carro deletado com sucesso", callback: () {
+        Navigator.pop(context);
+      });
+    } else {
+      alert(context, response.message);
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
     _descriptionBloc.dispose();
-
   }
 }
