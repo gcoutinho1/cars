@@ -9,7 +9,7 @@ class FavoriteBloc {
 
   Future<List<Cars>> fetch() async {
     try {
-      List<Cars> cars =  FavoriteService.getCars();
+      List<Cars> cars = await FavoriteService.getCars();
       _streamController.add(cars);
       return cars;
     } catch (e) {

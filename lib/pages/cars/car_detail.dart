@@ -18,10 +18,17 @@ class CarDetail extends StatefulWidget {
 class _CarDetailState extends State<CarDetail> {
   final _descriptionBloc = DescriptionBloc();
 
+  Color color = Colors.grey;
+
   Cars get car => widget.car;
   @override
   void initState() {
     super.initState();
+    FavoriteService.isFavorite(car).then((bool favorite){
+      setState(() {
+        color = favorite ? Colors.red : Colors.grey;
+      });
+    });
     _descriptionBloc.loadDescription();
   }
 
@@ -92,7 +99,7 @@ class _CarDetailState extends State<CarDetail> {
             IconButton(
               icon: Icon(
                 Icons.favorite,
-                color: Colors.red,
+                color: color,
                 size: 40,
               ),
               onPressed: _onClickFavorite,
@@ -129,8 +136,11 @@ class _CarDetailState extends State<CarDetail> {
     }
   }
 
-  void _onClickFavorite() {
-    FavoriteService.favoritar(car);
+  void _onClickFavorite() async {
+    bool favorite = await FavoriteService.favoritar(car);
+    setState(() {
+      color = favorite ? Colors.red : Colors.grey;
+    });
   }
 
   void _onClickShare() {}
