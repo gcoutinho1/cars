@@ -1,7 +1,8 @@
 import 'dart:async';
-import 'package:cars/pages/fav/entity.dart';
+import 'package:cars/utils/sql/db_helper.dart';
+import 'package:cars/utils/sql/entity.dart';
 import 'package:sqflite/sqflite.dart';
-import 'db_helper.dart';
+
 
 // Data Access Object
 abstract class BaseDAO<T extends Entity> {

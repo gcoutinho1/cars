@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cars/pages/fav/car_dao.dart';
+import 'package:cars/pages/cars/car_dao.dart';
 import 'package:cars/utils/network.dart';
 
 import 'cars.dart';

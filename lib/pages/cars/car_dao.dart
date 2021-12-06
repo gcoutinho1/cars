@@ -1,5 +1,5 @@
 import 'package:cars/pages/cars/cars.dart';
-import 'base_dao.dart';
+import '../../utils/sql/base_dao.dart';
 
 // Data Access Object
 class CarDAO extends BaseDAO<Cars> {

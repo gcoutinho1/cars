@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cars/pages/cars/description_api.dart';
 import 'package:cars/pages/cars/description_bloc.dart';
+import 'package:cars/pages/fav/favorite_service.dart';
 import 'package:cars/widgets/text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,8 @@ class CarDetail extends StatefulWidget {
 
 class _CarDetailState extends State<CarDetail> {
   final _descriptionBloc = DescriptionBloc();
+
+  Cars get car => widget.car;
   @override
   void initState() {
     super.initState();
@@ -127,7 +130,9 @@ class _CarDetailState extends State<CarDetail> {
     }
   }
 
-  void _onClickFavorite() {}
+  void _onClickFavorite() {
+    FavoriteService.favoritar(car);
+  }
 
   void _onClickShare() {}
 

@@ -1,8 +1,8 @@
 import 'package:cars/pages/cars/home_page.dart';
-import 'package:cars/pages/fav/db_helper.dart';
 import 'package:cars/pages/login/login_page.dart';
 import 'package:cars/pages/login/user.dart';
 import 'package:cars/utils/nav.dart';
+import 'package:cars/utils/sql/db_helper.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
