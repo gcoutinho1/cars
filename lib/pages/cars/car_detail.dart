@@ -145,7 +145,7 @@ class _CarDetailState extends State<CarDetail> {
   }
 
   void _onClickFavorite() async {
-    bool favorite = await FavoriteService.favoritar(car);
+    bool favorite = await FavoriteService.favoritar(context, car);
     setState(() {
       color = favorite ? Colors.red : Colors.grey;
     });

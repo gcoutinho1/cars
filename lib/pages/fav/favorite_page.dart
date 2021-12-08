@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'package:cars/main.dart';
 import 'package:cars/pages/cars/cars.dart';
 import 'package:cars/pages/cars/cars_listview.dart';
 import 'package:cars/widgets/text_error.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'favorite_bloc.dart';
 
 class FavoritePage extends StatefulWidget {
@@ -12,7 +14,7 @@ class FavoritePage extends StatefulWidget {
 
 class _FavoritePageState extends State<FavoritePage>
     with AutomaticKeepAliveClientMixin<FavoritePage> {
-  final _bloc = FavoriteBloc();
+
 
   @override
   bool get wantKeepAlive => true;
@@ -20,14 +22,17 @@ class _FavoritePageState extends State<FavoritePage>
   @override
   void initState() {
     super.initState();
-    _bloc.fetch();
+    FavoriteBloc favoriteBloc = Provider.of<FavoriteBloc>(context, listen: false);
+    favoriteBloc.fetch();
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    FavoriteBloc favoriteBloc = Provider.of<FavoriteBloc>(context, listen: false);
+
     return StreamBuilder(
-        stream: _bloc.stream,
+        stream: favoriteBloc.stream,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return TextError("Não foi possível buscar os seus favoritos");
@@ -44,12 +49,7 @@ class _FavoritePageState extends State<FavoritePage>
   }
 
   Future<void> _onRefresh() {
-    return _bloc.fetch();
+    return Provider.of<FavoriteBloc>(context, listen: false).fetch();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _bloc.dispose();
-  }
 }
