@@ -183,7 +183,7 @@ class _CarDetailState extends State<CarDetail> {
     ApiResponse<bool> response = await CarsApi.delete(car);
     if (response.working) {
       alert(context, "Carro deletado com sucesso", callback: () {
-        Navigator.pop(context);
+        pop(context);
       });
     } else {
       alert(context, response.message);

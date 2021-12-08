@@ -1,3 +1,4 @@
+import 'package:cars/pages/fav/favorite_page.dart';
 import 'package:cars/pages/login/login_page.dart';
 import 'package:cars/pages/login/user.dart';
 import 'package:cars/utils/nav.dart';
@@ -22,7 +23,9 @@ class DrawerList extends StatelessWidget {
             title: Text("Favoritos"),
             subtitle: Text("Adicione aos favoritos"),
             trailing: Icon(Icons.arrow_forward),
-            onTap: () {},
+            onTap: () {
+              push(context, FavoritePage());
+            }
           ),
           ListTile(
             leading: Icon(Icons.help),

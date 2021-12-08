@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cars/pages/api_response.dart';
 import 'package:cars/pages/cars/cars.dart';
@@ -8,6 +10,7 @@ import 'package:cars/widgets/app_text.dart';
 import 'package:cars/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:cars/utils/nav.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CarFormPage extends StatefulWidget {
   final Cars car;
@@ -28,6 +31,8 @@ class _CarFormPageState extends State<CarFormPage> {
   int _radioIndex = 0;
 
   var _showProgress = false;
+
+  File _file;
 
   Cars get car => widget.car;
 
@@ -117,14 +122,18 @@ class _CarFormPageState extends State<CarFormPage> {
   }
 
   _headerFoto() {
-    return car != null
-        ? CachedNetworkImage(
-            imageUrl: car.urlFoto,
-          )
-        : Image.asset(
-            "assets/images/camera.png",
-            height: 150,
-          );
+    return InkWell(
+        onTap: _onClickPhoto,
+        child: _file != null ? Image.file(_file, height: 150,)
+            : car != null
+            ? CachedNetworkImage(
+          imageUrl: car.urlFoto,
+        )
+            : Image.asset(
+          "assets/images/camera.png",
+          height: 150,
+        ),
+        );
   }
 
   _radioTipo() {
@@ -208,10 +217,10 @@ class _CarFormPageState extends State<CarFormPage> {
 
     print("Salvar o carro $c");
     await Future.delayed(Duration(seconds: 3));
-    ApiResponse<bool> response = await CarsApi.save(c);
+    ApiResponse<bool> response = await CarsApi.save(c, _file);
     if (response.working) {
       alert(context, "Carro salvo com sucesso", callback: () {
-        Navigator.pop(context);
+        pop(context);
       });
     } else {
       alert(context, response.message);
@@ -224,37 +233,13 @@ class _CarFormPageState extends State<CarFormPage> {
     print("Fim.");
   }
 
-  _onClickDelete() async {
-    if (!_formKey.currentState.validate()) {
-      return;
-    }
 
-    // deleta o carro
-    var c = car ?? Cars();
-    c.nome = tNome.text;
-    c.descricao = tDesc.text;
-    c.tipo = _getTipo();
-    print("Carro: $c");
-
-    setState(() {
-      _showProgress = true;
-    });
-
-    print("deletar o carro $c");
-    await Future.delayed(Duration(seconds: 3));
-    ApiResponse<bool> response = await CarsApi.delete(c);
-    if (response.working) {
-      alert(context, "Carro deletado com sucesso", callback: () {
-        Navigator.pop(context);
+  void _onClickPhoto() async {
+    File file = await ImagePicker.pickImage(source: ImageSource.gallery);
+    if(file != null){
+      setState(() {
+        this._file = file;
       });
-    } else {
-      alert(context, response.message);
     }
-
-    setState(() {
-      _showProgress = false;
-    });
-
-    print("Fim.");
   }
 }

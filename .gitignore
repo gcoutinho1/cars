@@ -33,6 +33,8 @@
 /lib/pages/login/login_api.dart
 /lib/pages/cars/cars_api.dart
 /lib/pages/cars/description_api.dart
+/lib/pages/cars/upload_api.dart
+/lib/utils/http_helper.dart
 
 # Web related
 lib/generated_plugin_registrant.dart
