@@ -19,55 +19,54 @@ class CarsListView extends StatelessWidget {
         itemCount: cars.length,
         itemBuilder: (context, index) {
           Cars c = cars[index];
-          return Container(
-            child: InkWell(
-              onTap: (){
-                _onClickCar(context, c);
-              },
-              onLongPress: (){
-                _onLongClickCar(context, c);
-              },
-              child: Card(
+
+          return InkWell(
+            onTap: (){
+              _onClickCar(context, c);
+            },
+            onLongPress: (){
+              _onLongClickCar(context, c);
+            },
+            child: Card(
+              child: Container(
+                padding: EdgeInsets.all(10),
                 color: Colors.grey[10],
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: CachedNetworkImage(
-                          imageUrl: c.urlFoto ?? "https://images.pexels.com/photos/8740896/pexels-photo-8740896.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-                          width: 250,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: CachedNetworkImage(
+                        imageUrl: c.urlFoto ?? "https://images.pexels.com/photos/8740896/pexels-photo-8740896.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+                        width: 250,
+                      ),
+                    ),
+                    Text(
+                      c.nome,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 25),
+                    ),
+                    Text(
+                      "Descrição",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    ButtonBar(
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            _onClickCar(context, c);
+                          },
+                          child: Text('DETALHES'),
                         ),
-                      ),
-                      Text(
-                        c.nome,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 25),
-                      ),
-                      Text(
-                        "Descrição",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      ButtonBar(
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              _onClickCar(context, c);
-                            },
-                            child: Text('DETALHES'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Share.share(c.urlFoto);
-                            },
-                            child: Text('SHARE'),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        TextButton(
+                          onPressed: () {
+                            Share.share(c.urlFoto);
+                          },
+                          child: Text('SHARE'),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -81,7 +80,7 @@ class CarsListView extends StatelessWidget {
         push(context, CarDetail(c));
   }
 
-  void _onLongClickCar(BuildContext context, Cars c) {
+    _onLongClickCar(BuildContext context, Cars c) {
     showModalBottomSheet(context: context, builder: (context){
       return Column(
         mainAxisSize: MainAxisSize.min,

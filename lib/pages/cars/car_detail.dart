@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cars/pages/cars/car_form_page.dart';
 import 'package:cars/pages/cars/description_bloc.dart';
+import 'package:cars/pages/cars/video_page.dart';
 import 'package:cars/pages/fav/favorite_service.dart';
 import 'package:cars/utils/alert_dialog.dart';
 import 'package:cars/utils/event_bus.dart';
@@ -8,6 +9,7 @@ import 'package:cars/utils/nav.dart';
 import 'package:cars/widgets/text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../api_response.dart';
 import 'cars.dart';
@@ -44,7 +46,7 @@ class _CarDetailState extends State<CarDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.car.nome),
+        title: Text(car.nome),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.place),
@@ -84,7 +86,7 @@ class _CarDetailState extends State<CarDetail> {
         child: ListView(
           children: <Widget>[
             CachedNetworkImage(
-                imageUrl: widget.car.urlFoto ??
+                imageUrl: car.urlFoto ??
                     "https://images.pexels.com/photos/8740896/pexels-photo-8740896.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"),
             bloco1(),
             Divider(),
@@ -100,8 +102,8 @@ class _CarDetailState extends State<CarDetail> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            text(widget.car.nome, fontSize: 20, bold: true),
-            text(widget.car.tipo, fontSize: 16),
+            text(car.nome, fontSize: 20, bold: true),
+            text(car.tipo, fontSize: 16),
           ],
         ),
         Row(
@@ -130,7 +132,16 @@ class _CarDetailState extends State<CarDetail> {
 
   void _onClickMap() {}
 
-  void _onClickVideo() {}
+    _onClickVideo () {
+    if (car.urlVideo != null && car.urlVideo.isNotEmpty){
+      // launch(car.urlVideo);
+      push(context, VideoPage(car));
+    } else {
+      alert(context,
+        "Este carro não possui video",
+      );
+    }
+  }
 
   _onClickPopupMenu(String value) {
     switch (value) {
@@ -162,7 +173,7 @@ class _CarDetailState extends State<CarDetail> {
         SizedBox(
           height: 20,
         ),
-        text(widget.car.descricao, fontSize: 16),
+        text(car.descricao, fontSize: 16),
         SizedBox(
           height: 13,
         ),
