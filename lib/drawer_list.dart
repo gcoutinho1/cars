@@ -1,3 +1,4 @@
+import 'package:cars/firebase/firebase_service.dart';
 import 'package:cars/pages/fav/favorite_page.dart';
 import 'package:cars/pages/login/login_page.dart';
 import 'package:cars/pages/login/user.dart';
@@ -58,6 +59,7 @@ class DrawerList extends StatelessWidget {
 
   _onClickLogout(BuildContext context) {
     User.clear();
+    FirebaseService().logout();
     Navigator.pop(context);
     push(context, LoginPage(), replace: true);
   }

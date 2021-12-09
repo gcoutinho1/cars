@@ -5,7 +5,6 @@ import 'package:cars/pages/cars/cars_listview.dart';
 import 'package:cars/utils/event_bus.dart';
 import 'package:cars/widgets/text_error.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'cars.dart';
 

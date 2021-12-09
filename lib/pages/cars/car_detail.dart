@@ -9,7 +9,6 @@ import 'package:cars/utils/nav.dart';
 import 'package:cars/widgets/text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../api_response.dart';
 import 'cars.dart';

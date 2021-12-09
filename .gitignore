@@ -35,6 +35,8 @@
 /lib/pages/cars/description_api.dart
 /lib/pages/cars/upload_api.dart
 /lib/utils/http_helper.dart
+/android/app/google-services.json
+/android/cars_backup_b4_androidx.zip
 
 # Web related
 lib/generated_plugin_registrant.dart

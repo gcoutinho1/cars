@@ -37,6 +37,10 @@ dependencies:
   share: ^2.0.4
   url_launcher: ^5.0.1
   video_player: ^0.10.0+2
+  flutter_auth_buttons: ^0.10.0
+  firebase_auth: 3.2.0
+  firebase_core: 1.10.5
+  google_sign_in: 4.5.5
 
 
 dev_dependencies:
