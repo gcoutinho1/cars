@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cars/utils/nav.dart';
 import 'package:flutter/material.dart';
+
 import 'car_detail.dart';
 import 'cars.dart';
 

@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:cars/utils/sql/db_helper.dart';
 import 'package:cars/utils/sql/entity.dart';
 import 'package:sqflite/sqflite.dart';
@@ -14,7 +15,7 @@ abstract class BaseDAO<T extends Entity> {
     var dbClient = await db;
     var id = await dbClient.insert(tableName, entity.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
-    print('id: $id');
+    // print('id: $id');
     return id;
   }
 

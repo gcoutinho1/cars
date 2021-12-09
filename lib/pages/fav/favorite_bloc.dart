@@ -1,7 +1,9 @@
-import 'dart:async';
+/** import 'dart:async';
 import 'package:cars/pages/cars/cars.dart';
 import 'package:cars/pages/fav/favorite_service.dart';
 
+
+// era utilizado antes da criação de favorite_model
 class FavoriteBloc {
   final _streamController = StreamController<List<Cars>>();
 
@@ -24,3 +26,5 @@ class FavoriteBloc {
     _streamController.close();
   }
 }
+
+    **/

@@ -3,8 +3,8 @@ import 'package:cars/pages/cars/home_page.dart';
 import 'package:cars/pages/login/login_bloc.dart';
 import 'package:cars/utils/alert_dialog.dart';
 import 'package:cars/utils/nav.dart';
-import 'package:cars/widgets/button.dart';
 import 'package:cars/widgets/app_text.dart';
+import 'package:cars/widgets/button.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {

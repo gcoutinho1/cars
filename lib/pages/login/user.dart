@@ -1,5 +1,6 @@
-import 'package:cars/utils/prefs.dart';
 import 'dart:convert' as convert;
+
+import 'package:cars/utils/prefs.dart';
 
 class User {
   String login;

@@ -1,5 +1,21 @@
-import 'package:cars/utils/sql/entity.dart';
 import 'dart:convert' as convert;
+
+import 'package:cars/utils/event_bus.dart';
+import 'package:cars/utils/sql/entity.dart';
+
+class CarsEvent extends Event {
+  // save, delete
+  String action;
+  // classicos, esportivos, luxo
+  String tipo;
+
+  CarsEvent(this.action, this.tipo);
+
+  @override
+  String toString() {
+    return 'CarsEvent{action: $action, tipo: $tipo}';
+  }
+}
 
 class Cars extends Entity {
   int id;

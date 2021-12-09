@@ -1,9 +1,9 @@
-import 'package:cars/main.dart';
 import 'package:cars/pages/cars/car_dao.dart';
 import 'package:cars/pages/cars/cars.dart';
-import 'package:cars/pages/fav/favorite_bloc.dart';
 import 'package:cars/pages/fav/favorite_dao.dart';
+import 'package:cars/pages/fav/favorite_model.dart';
 import 'package:provider/provider.dart';
+
 import 'favorite.dart';
 
 class FavoriteService {
@@ -15,12 +15,12 @@ class FavoriteService {
     if(exists){
       // remove from favorites
       dao.delete(c.id);
-      Provider.of<FavoriteBloc>(context, listen: false).fetch();
+      Provider.of<FavoriteModel>(context, listen: false).getCars();
       return false;
     } else {
       // add on favorites
       dao.save(f);
-      Provider.of<FavoriteBloc>(context, listen: false).fetch();
+      Provider.of<FavoriteModel>(context, listen: false).getCars();
       return true;
     }
 

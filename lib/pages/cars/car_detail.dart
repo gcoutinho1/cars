@@ -3,10 +3,12 @@ import 'package:cars/pages/cars/car_form_page.dart';
 import 'package:cars/pages/cars/description_bloc.dart';
 import 'package:cars/pages/fav/favorite_service.dart';
 import 'package:cars/utils/alert_dialog.dart';
+import 'package:cars/utils/event_bus.dart';
 import 'package:cars/utils/nav.dart';
 import 'package:cars/widgets/text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../api_response.dart';
 import 'cars.dart';
 import 'cars_api.dart';
@@ -183,6 +185,7 @@ class _CarDetailState extends State<CarDetail> {
     ApiResponse<bool> response = await CarsApi.delete(car);
     if (response.working) {
       alert(context, "Carro deletado com sucesso", callback: () {
+        EventBus.get(context).sendEvent(CarsEvent("Carro deletado", car.tipo));
         pop(context);
       });
     } else {

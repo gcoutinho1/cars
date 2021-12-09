@@ -1,6 +1,6 @@
 // Data Access Object
-import 'package:cars/utils/sql/base_dao.dart';
 import 'package:cars/pages/fav/favorite.dart';
+import 'package:cars/utils/sql/base_dao.dart';
 
 class FavoriteDAO extends BaseDAO<Favorite> {
   @override

@@ -4,12 +4,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cars/pages/api_response.dart';
 import 'package:cars/pages/cars/cars.dart';
 import 'package:cars/pages/cars/cars_api.dart';
-import 'package:cars/pages/fav/favorite_page.dart';
 import 'package:cars/utils/alert_dialog.dart';
+import 'package:cars/utils/event_bus.dart';
+import 'package:cars/utils/nav.dart';
 import 'package:cars/widgets/app_text.dart';
 import 'package:cars/widgets/button.dart';
 import 'package:flutter/material.dart';
-import 'package:cars/utils/nav.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CarFormPage extends StatefulWidget {
@@ -216,10 +216,11 @@ class _CarFormPageState extends State<CarFormPage> {
     });
 
     print("Salvar o carro $c");
-    await Future.delayed(Duration(seconds: 3));
+    // await Future.delayed(Duration(seconds: 3));
     ApiResponse<bool> response = await CarsApi.save(c, _file);
     if (response.working) {
       alert(context, "Carro salvo com sucesso", callback: () {
+        EventBus.get(context).sendEvent(CarsEvent("Carro salvo", c.tipo));
         pop(context);
       });
     } else {
