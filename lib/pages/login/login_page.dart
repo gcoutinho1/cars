@@ -9,6 +9,8 @@ import 'package:cars/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 
+import 'cadastro_page.dart';
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -23,7 +25,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
@@ -77,15 +78,29 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: _onPressedLogin,
                     showProgress: snapshot.data ?? false,
                   );
-                }
-                ),
+                }),
             Container(
               height: 46,
               margin: EdgeInsets.only(top: 20),
               child: GoogleSignInButton(
                 onPressed: _onClickGoogle,
               ),
-            )
+            ),
+            Container(
+              height: 46,
+              margin: EdgeInsets.only(top: 20),
+              child: InkWell(
+                onTap: _onClickCadastrar,
+                child: Text(
+                  "Cadastre-se",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 22,
+                      color: Colors.red,
+                      decoration: TextDecoration.underline),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -110,8 +125,6 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       alert(context, response.message);
     }
-
-
   }
 
   String _validateLogin(String text) {
@@ -140,11 +153,14 @@ class _LoginPageState extends State<LoginPage> {
   _onClickGoogle() async {
     final service = FirebaseService();
     ApiResponse response = await service.loginGoogle();
-    if(response.working){
+    if (response.working) {
       push(context, HomePage(), replace: true);
     } else {
       alert(context, response.message);
     }
+  }
 
+  void _onClickCadastrar() async {
+    push(context, CadastroPage(), replace: true);
   }
 }

@@ -2,7 +2,7 @@ import 'dart:convert' as convert;
 
 import 'package:cars/utils/prefs.dart';
 
-class User {
+class Users {
   String login;
   String nome;
   String email;
@@ -10,7 +10,7 @@ class User {
   String token;
   List<String> roles;
 
-  User(
+  Users(
       {this.login,
       this.nome,
       this.email,
@@ -18,7 +18,7 @@ class User {
       this.token,
       this.roles});
 
-  User.fromJson(Map<String, dynamic> json) {
+  Users.fromJson(Map<String, dynamic> json) {
     login = json['login'];
     nome = json['nome'];
     email = json['email'];
@@ -48,13 +48,13 @@ class User {
     Prefs.setString("user.prefs", "");
   }
 
-  static Future<User> get() async {
+  static Future<Users> get() async {
     String json = await Prefs.getString("user.prefs");
     if (json.isEmpty) {
       return null;
     }
     Map map = convert.json.decode(json);
-    User user = User.fromJson(map);
+    Users user = Users.fromJson(map);
     return user;
   }
 }

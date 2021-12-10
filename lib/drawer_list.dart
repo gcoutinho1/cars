@@ -3,20 +3,21 @@ import 'package:cars/pages/fav/favorite_page.dart';
 import 'package:cars/pages/login/login_page.dart';
 import 'package:cars/pages/login/user.dart';
 import 'package:cars/utils/nav.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class DrawerList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Future<User> future = User.get();
+    Future<FirebaseUser> future = FirebaseAuth.instance.currentUser();
     return Drawer(
       child: ListView(
         children: [
           // FlutterLogo(size: 50,),
-          FutureBuilder<User>(
+          FutureBuilder<FirebaseUser>(
               future: future,
               builder: (context, snapshot){
-                User user = snapshot.data;
+                FirebaseUser user = snapshot.data;
                 return user != null ? _header(user) : Container();
               }),
           ListTile(
@@ -47,18 +48,18 @@ class DrawerList extends StatelessWidget {
     );
   }
 
-  UserAccountsDrawerHeader _header(User user) {
+  UserAccountsDrawerHeader _header(FirebaseUser user) {
     return UserAccountsDrawerHeader(
-      accountName: Text(user.nome),
+      accountName: Text(user.displayName ?? ""),
       accountEmail: Text(user.email),
-      currentAccountPicture: CircleAvatar(
-        backgroundImage: NetworkImage(user.urlFoto),
-      ),
+      currentAccountPicture: user.photoUrl != null ? CircleAvatar(
+        backgroundImage: NetworkImage(user.photoUrl),
+      ) : FlutterLogo(),
     );
   }
 
   _onClickLogout(BuildContext context) {
-    User.clear();
+    Users.clear();
     FirebaseService().logout();
     Navigator.pop(context);
     push(context, LoginPage(), replace: true);

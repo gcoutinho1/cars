@@ -3,6 +3,7 @@ import 'package:cars/pages/login/login_page.dart';
 import 'package:cars/pages/login/user.dart';
 import 'package:cars/utils/nav.dart';
 import 'package:cars/utils/sql/db_helper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     Future futureA = DatabaseHelper.getInstance().db;
     Future futureB = Future.delayed(Duration(seconds: 3));
-    Future<User> futureC = User.get();
+    Future<FirebaseUser> futureC = FirebaseAuth.instance.currentUser();
 
     // futureC.then((User user) {
     //   if (user != null) {
@@ -34,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // });
 
     Future.wait([futureA, futureB, futureC]).then((List values) {
-      User user = values[2];
+      FirebaseUser user = values[2];
       print(user);
       if (user != null) {
         push(context, HomePage(), replace: true);

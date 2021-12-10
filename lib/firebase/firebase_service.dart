@@ -1,4 +1,5 @@
 import 'package:cars/pages/api_response.dart';
+import 'package:cars/pages/login/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -10,26 +11,26 @@ class FirebaseService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<ApiResponse> login(String email, String senha) async {
-    final User user = _auth.currentUser;
+    // final User user = _auth.currentUser;
     try {
       // Login no Firebase
-      UserCredential result =
-      await _auth.signInWithEmailAndPassword(email: email, password: senha);
-      final User fUser = result.user;
+      AuthResult result =
+          await _auth.signInWithEmailAndPassword(email: email, password: senha);
+      final FirebaseUser fUser = result.user;
       print("Firebase Nome: ${fUser.displayName}");
       print("Firebase Email: ${fUser.email}");
-      print("Firebase Foto: ${fUser.photoURL}");
+      print("Firebase Foto: ${fUser.photoUrl}");
 
       // Cria um usuario do app
-      // final user = User(
-      //   nome: fUser.displayName,
-      //   login: fUser.email,
-      //   email: fUser.email,
-      //   urlFoto: fUser.photoURL,
-      // );
+      final user = Users(
+        nome: fUser.displayName,
+        login: fUser.email,
+        email: fUser.email,
+        urlFoto: fUser.photoUrl,
+      );
       // user.save();
-      //
-      // // Salva no Firestore
+
+      // Salva no Firestore
       // saveUser(fUser);
 
       // Resposta genérica
@@ -45,33 +46,33 @@ class FirebaseService {
       // Login com o Google
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
       final GoogleSignInAuthentication googleAuth =
-      await googleUser.authentication;
+          await googleUser.authentication;
 
       print("Google User: ${googleUser.email}");
 
       // Credenciais para o Firebase
-      final AuthCredential credential = GoogleAuthProvider.credential(
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
       // Login no Firebase
-      UserCredential result = await _auth.signInWithCredential(credential);
-      final User fUser = result.user;
+      AuthResult result = await _auth.signInWithCredential(credential);
+      final FirebaseUser fUser = result.user;
       print("Firebase Nome: ${fUser.displayName}");
       print("Firebase Email: ${fUser.email}");
-      print("Firebase Foto: ${fUser.photoURL}");
+      print("Firebase Foto: ${fUser.photoUrl}");
 
       // // Cria um usuario do app
-      // final user = User(
-      //   nome: fUser.displayName,
-      //   login: fUser.email,
-      //   email: fUser.email,
-      //   urlFoto: fUser.photoURL,
-      // );
-      // user.save();
-      //
-      // // Salva no Firestore
+      final user = Users(
+        nome: fUser.displayName,
+        login: fUser.email,
+        email: fUser.email,
+        urlFoto: fUser.photoUrl,
+      );
+      user.save();
+
+      // Salva no Firestore
       // saveUser(fUser);
 
       // Resposta genérica
@@ -82,17 +83,17 @@ class FirebaseService {
     }
   }
 
-  // salva o usuario na collection de usuarios logados
-  // void saveUser(User fUser) async {
+  // // salva o usuario na collection de usuarios logados
+  // void saveUser(Users fUser) async {
   //   if (fUser != null) {
   //     firebaseUserUid = fUser.uid;
   //     DocumentReference refUser =
-  //     Firestore.instance.collection("users").document(firebaseUserUid);
+  //         Firestore.instance.collection("users").document(firebaseUserUid);
   //     refUser.setData({
   //       'nome': fUser.displayName,
   //       'email': fUser.email,
   //       'login': fUser.email,
-  //       'urlFoto': fUser.photoURL,
+  //       'urlFoto': fUser.photoUrl,
   //     });
   //   }
   // }
@@ -111,7 +112,7 @@ class FirebaseService {
   //     final userUpdateInfo = UserUpdateInfo();
   //     userUpdateInfo.displayName = nome;
   //     userUpdateInfo.photoUrl =
-  //     "https://s3-sa-east-1.amazonaws.com/livetouch-temp/livrows/foto.png";
+  //         "https://s3-sa-east-1.amazonaws.com/livetouch-temp/livrows/foto.png";
   //
   //     fUser.updateProfile(userUpdateInfo);
   //
