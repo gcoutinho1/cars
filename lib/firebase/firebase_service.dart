@@ -98,39 +98,39 @@ class FirebaseService {
   //   }
   // }
 
-  // Future<ApiResponse> cadastrar(String nome, String email, String senha) async {
-  //   try {
-  //     // Usuario do Firebase
-  //     AuthResult result = await _auth.createUserWithEmailAndPassword(
-  //         email: email, password: senha);
-  //     final FirebaseUser fUser = result.user;
-  //     print("Firebase Nome: ${fUser.displayName}");
-  //     print("Firebase Email: ${fUser.email}");
-  //     print("Firebase Foto: ${fUser.photoUrl}");
-  //
-  //     // Dados para atualizar o usuário
-  //     final userUpdateInfo = UserUpdateInfo();
-  //     userUpdateInfo.displayName = nome;
-  //     userUpdateInfo.photoUrl =
-  //         "https://s3-sa-east-1.amazonaws.com/livetouch-temp/livrows/foto.png";
-  //
-  //     fUser.updateProfile(userUpdateInfo);
-  //
-  //     // Resposta genérica
-  //     return ApiResponse.working(message: "Usuário criado com sucesso");
-  //   } catch (error) {
-  //     print(error);
-  //
-  //     if (error is PlatformException) {
-  //       print("Error Code ${error.code}");
-  //
-  //       return ApiResponse.error(
-  //           message: "Erro ao criar um usuário.\n\n${error.message}");
-  //     }
-  //
-  //     return ApiResponse.error(message: "Não foi possível criar um usuário.");
-  //   }
-  // }
+  Future<ApiResponse> cadastrar(String nome, String email, String senha) async {
+    try {
+      // Usuario do Firebase
+      AuthResult result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: senha);
+      final FirebaseUser fUser = result.user;
+      print("Firebase Nome: ${fUser.displayName}");
+      print("Firebase Email: ${fUser.email}");
+      print("Firebase Foto: ${fUser.photoUrl}");
+
+      // Dados para atualizar o usuário
+      final userUpdateInfo = UserUpdateInfo();
+      userUpdateInfo.displayName = nome;
+      userUpdateInfo.photoUrl =
+          "https://s3-sa-east-1.amazonaws.com/livetouch-temp/livrows/foto.png";
+
+      fUser.updateProfile(userUpdateInfo);
+
+      // Resposta genérica
+      return ApiResponse.working(message: "Usuário criado com sucesso");
+    } catch (error) {
+      print(error);
+
+      if (error is PlatformException) {
+        print("Error Code ${error.code}");
+
+        return ApiResponse.error(
+            message: "Erro ao criar um usuário.\n\n${error.message}");
+      }
+
+      return ApiResponse.error(message: "Não foi possível criar um usuário.");
+    }
+  }
 
   Future<void> logout() async {
     // await FavoriteService().deleteCarros();

@@ -31,6 +31,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // desabilita o back button no AppBar
+        automaticallyImplyLeading: false,
         centerTitle: true,
         title: Text("Cars"),
       ),
