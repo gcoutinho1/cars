@@ -146,4 +146,3 @@ class _CadastroPageState extends State<CadastroPage> {
   }
 }
 
-//TODO: verificar o motivo de não estar pegando os dados de carros na api
