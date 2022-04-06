@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cars/firebase/firebasefavorite_service.dart';
 import 'package:cars/pages/cars/cars.dart';
 import 'package:cars/pages/cars/cars_listview.dart';
 import 'package:cars/pages/cars/cars_page.dart';
@@ -31,8 +32,10 @@ class _FavoritePageState extends State<FavoritePage>
   Widget build(BuildContext context) {
     super.build(context);
 
+    final service = FirebaseFavoriteService();
+
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('carros').snapshots(),
+      stream: service.getCars(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return TextError("Não foi possível buscar os carros");
@@ -45,9 +48,7 @@ class _FavoritePageState extends State<FavoritePage>
         }
 
         List<Cars> carros =
-            snapshot.data.documents.map((DocumentSnapshot document) {
-          return Cars.fromMap(document.data);
-        }).toList();
+            service.toList(snapshot);
 
         return CarsListView(carros);
       },

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cars/firebase/firebasefavorite_service.dart';
 import 'package:cars/pages/cars/car_form_page.dart';
 import 'package:cars/pages/cars/description_bloc.dart';
 import 'package:cars/pages/cars/video_page.dart';
@@ -27,17 +28,26 @@ class _CarDetailState extends State<CarDetail> {
   final _descriptionBloc = DescriptionBloc();
 
   Color color = Colors.grey;
-
   Cars get car => widget.car;
+  bool _isFavorite = false;
+
 
   @override
   void initState() {
     super.initState();
-    FavoriteService.isFavorite(car).then((bool favorite) {
-      setState(() {
-        color = favorite ? Colors.red : Colors.grey;
-      });
+    final service = FirebaseFavoriteService();
+    service.exists(car).then((b){
+      if(b) {
+        setState(() {
+          _isFavorite = b;
+        });
+      }
     });
+    // FavoriteService.isFavorite(car).then((bool favorite) {
+    //   setState(() {
+    //     color = favorite ? Colors.red : Colors.grey;
+    //   });
+    // });
     _descriptionBloc.loadDescription();
   }
 
@@ -113,7 +123,8 @@ class _CarDetailState extends State<CarDetail> {
                 color: color,
                 size: 40,
               ),
-              onPressed: _onClickFavorite,
+              // onPressed: _onClickFavorite,
+              onPressed: _onClickFirebaseFavorite,
             ),
             IconButton(
               icon: Icon(
@@ -156,10 +167,18 @@ class _CarDetailState extends State<CarDetail> {
     }
   }
 
-  void _onClickFavorite() async {
+    void _onClickFavorite() async {
     bool favorite = await FavoriteService.favoritar(context, car);
     setState(() {
       color = favorite ? Colors.red : Colors.grey;
+    });
+  }
+
+    void _onClickFirebaseFavorite() async {
+    final service = FirebaseFavoriteService();
+    final exists = await service.addFavorite(car);
+    setState(() {
+      color = exists ? Colors.red : Colors.grey;
     });
   }
 
