@@ -2,9 +2,13 @@ import 'dart:async';
 
 import 'package:cars/pages/cars/cars.dart';
 import 'package:cars/pages/cars/cars_listview.dart';
+import 'package:cars/pages/cars/cars_page.dart';
 import 'package:cars/pages/fav/favorite_model.dart';
+import 'package:cars/widgets/text_error.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'favorite_service.dart';
 
 class FavoritePage extends StatefulWidget {
   @override
@@ -27,21 +31,26 @@ class _FavoritePageState extends State<FavoritePage>
   Widget build(BuildContext context) {
     super.build(context);
 
-    FavoriteModel model = Provider.of<FavoriteModel>(context);
-    List<Cars> cars = model.cars;
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection('carros').snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return TextError("Não foi possível buscar os carros");
+        }
 
-    if (cars.isEmpty) {
-      return Center(
-        child: Text(
-          "Você não salvou algum carro nos favoritos",
-          style: TextStyle(fontSize: 20),
-        ),
-      );
-    }
-    return RefreshIndicator(onRefresh: _onRefresh, child: CarsListView(cars));
-  }
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
 
-  Future<void> _onRefresh() async {
-    return Provider.of<FavoriteModel>(context, listen: false).getCars();
+        List<Cars> carros =
+            snapshot.data.documents.map((DocumentSnapshot document) {
+          return Cars.fromMap(document.data);
+        }).toList();
+
+        return CarsListView(carros);
+      },
+    );
   }
 }
