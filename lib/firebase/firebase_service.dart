@@ -1,5 +1,6 @@
 import 'package:cars/pages/api_response.dart';
 import 'package:cars/pages/login/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -28,10 +29,10 @@ class FirebaseService {
         email: fUser.email,
         urlFoto: fUser.photoUrl,
       );
-      // user.save();
+      user.save();
 
       // Salva no Firestore
-      // saveUser(fUser);
+      saveUser(user);
 
       // Resposta genérica
       return ApiResponse.working();
@@ -83,20 +84,19 @@ class FirebaseService {
     }
   }
 
-  // // salva o usuario na collection de usuarios logados
-  // void saveUser(Users fUser) async {
-  //   if (fUser != null) {
-  //     firebaseUserUid = fUser.uid;
-  //     DocumentReference refUser =
-  //         Firestore.instance.collection("users").document(firebaseUserUid);
-  //     refUser.setData({
-  //       'nome': fUser.displayName,
-  //       'email': fUser.email,
-  //       'login': fUser.email,
-  //       'urlFoto': fUser.photoUrl,
-  //     });
-  //   }
-  // }
+  // salva o usuario na collection de usuarios logados
+  void saveUser(Users fUser) async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    if (fUser != null) {
+      firebaseUserUid = user.uid;
+      DocumentReference refUser =
+          Firestore.instance.collection("users").document(firebaseUserUid);
+      refUser.setData({
+        'nome': user.displayName,
+        'email': user.email,
+      });
+    }
+  }
 
   Future<ApiResponse> cadastrar(String nome, String email, String senha) async {
     try {
