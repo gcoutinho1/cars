@@ -236,10 +236,11 @@ class _CarFormPageState extends State<CarFormPage> {
 
 
   void _onClickPhoto() async {
-    File file = await ImagePicker.pickImage(source: ImageSource.gallery);
+    final ImagePicker _picker = ImagePicker();
+    XFile file = await _picker.pickImage(source: ImageSource.gallery);
     if(file != null){
       setState(() {
-        this._file = file;
+        // this._file = file;
       });
     }
   }

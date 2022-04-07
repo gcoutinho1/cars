@@ -9,15 +9,15 @@ import 'package:flutter/material.dart';
 class DrawerList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Future<FirebaseUser> future = FirebaseAuth.instance.currentUser();
+    Future<User> future = Future.value(FirebaseAuth.instance.currentUser);
     return Drawer(
       child: ListView(
         children: [
           // FlutterLogo(size: 50,),
-          FutureBuilder<FirebaseUser>(
+          FutureBuilder<User>(
               future: future,
               builder: (context, snapshot){
-                FirebaseUser user = snapshot.data;
+                User user = snapshot.data;
                 return user != null ? _header(user) : Container();
               }),
           ListTile(
@@ -48,12 +48,12 @@ class DrawerList extends StatelessWidget {
     );
   }
 
-  UserAccountsDrawerHeader _header(FirebaseUser user) {
+  UserAccountsDrawerHeader _header(User user) {
     return UserAccountsDrawerHeader(
       accountName: Text(user.displayName ?? ""),
       accountEmail: Text(user.email),
-      currentAccountPicture: user.photoUrl != null ? CircleAvatar(
-        backgroundImage: NetworkImage(user.photoUrl),
+      currentAccountPicture: user.photoURL != null ? CircleAvatar(
+        backgroundImage: NetworkImage(user.photoURL),
       ) : FlutterLogo(),
     );
   }

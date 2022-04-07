@@ -9,22 +9,22 @@ class FirebaseFavoriteService {
 
   CollectionReference get _cars {
     String uid = firebaseUserUid;
-    DocumentReference refUser = Firestore.instance.collection("users").document(uid);
+    DocumentReference refUser = FirebaseFirestore.instance.collection("users").doc(uid);
     return refUser.collection("carros");
   }
 
   List<Cars> toList(AsyncSnapshot<QuerySnapshot> snapshot) {
-    return snapshot.data.documents
-        .map((document) => Cars.fromMap(document.data))
+    return snapshot.data.docs
+        .map((document) => Cars.fromMap(document.data()))
         .toList();
   }
 
   Future<bool> addFavorite(Cars cars) async {
-    var document = _cars.document("${cars.id}");
+    var document = _cars.doc("${cars.id}");
     var documentSnapshot = await document.get();
     if (!documentSnapshot.exists){
       print("${cars.nome}, adicionado nos favoritos");
-      document.setData(cars.toMap());
+      document.update(cars.toMap());
 
       return true;
     } else {
@@ -37,7 +37,7 @@ class FirebaseFavoriteService {
 
   Future<bool> exists(Cars cars) async {
     // busca carro no banco de dados do Firebase
-    var document = _cars.document("${cars.id}");
+    var document = _cars.doc("${cars.id}");
     var documentSnapshot = await document.get();
     // verifica se o carro já esta adicionado nos favoritos
     return await documentSnapshot.exists;

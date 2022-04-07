@@ -15,19 +15,19 @@ class FirebaseService {
     // final User user = _auth.currentUser;
     try {
       // Login no Firebase
-      AuthResult result =
+      UserCredential result =
           await _auth.signInWithEmailAndPassword(email: email, password: senha);
-      final FirebaseUser fUser = result.user;
+      final User fUser = result.user;
       print("Firebase Nome: ${fUser.displayName}");
       print("Firebase Email: ${fUser.email}");
-      print("Firebase Foto: ${fUser.photoUrl}");
+      print("Firebase Foto: ${fUser.photoURL}");
 
       // Cria um usuario do app
       final user = Users(
         nome: fUser.displayName,
         login: fUser.email,
         email: fUser.email,
-        urlFoto: fUser.photoUrl,
+        urlFoto: fUser.photoURL,
       );
       user.save();
 
@@ -52,24 +52,24 @@ class FirebaseService {
       print("Google User: ${googleUser.email}");
 
       // Credenciais para o Firebase
-      final AuthCredential credential = GoogleAuthProvider.getCredential(
+      final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
       // Login no Firebase
-      AuthResult result = await _auth.signInWithCredential(credential);
-      final FirebaseUser fUser = result.user;
+      UserCredential result = await _auth.signInWithCredential(credential);
+      final User fUser = result.user;
       print("Firebase Nome: ${fUser.displayName}");
       print("Firebase Email: ${fUser.email}");
-      print("Firebase Foto: ${fUser.photoUrl}");
+      print("Firebase Foto: ${fUser.photoURL}");
 
       // // Cria um usuario do app
       final user = Users(
         nome: fUser.displayName,
         login: fUser.email,
         email: fUser.email,
-        urlFoto: fUser.photoUrl,
+        urlFoto: fUser.photoURL,
       );
       user.save();
 
@@ -86,12 +86,12 @@ class FirebaseService {
 
   // salva o usuario na collection de usuarios logados
   void saveUser(Users fUser) async {
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    User user = await FirebaseAuth.instance.currentUser;
     if (fUser != null) {
       firebaseUserUid = user.uid;
       DocumentReference refUser =
-          Firestore.instance.collection("users").document(firebaseUserUid);
-      refUser.setData({
+          FirebaseFirestore.instance.collection("users").doc(firebaseUserUid);
+      refUser.update({
         'nome': user.displayName,
         'email': user.email,
       });
@@ -101,20 +101,19 @@ class FirebaseService {
   Future<ApiResponse> cadastrar(String nome, String email, String senha) async {
     try {
       // Usuario do Firebase
-      AuthResult result = await _auth.createUserWithEmailAndPassword(
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: senha);
-      final FirebaseUser fUser = result.user;
+      final User fUser = result.user;
       print("Firebase Nome: ${fUser.displayName}");
       print("Firebase Email: ${fUser.email}");
-      print("Firebase Foto: ${fUser.photoUrl}");
+      print("Firebase Foto: ${fUser.photoURL}");
 
       // Dados para atualizar o usuário
-      final userUpdateInfo = UserUpdateInfo();
-      userUpdateInfo.displayName = nome;
-      userUpdateInfo.photoUrl =
-          "https://s3-sa-east-1.amazonaws.com/livetouch-temp/livrows/foto.png";
+      final userUpdateInfo = UserInfo;
+      fUser.updateDisplayName(nome);
+      fUser.updateProfile(photoURL: "https://s3-sa-east-1.amazonaws.com/livetouch-temp/livrows/foto.png");
 
-      fUser.updateProfile(userUpdateInfo);
+      // fUser.updatePhotoURL(userUpdateInfo);
 
       // Resposta genérica
       return ApiResponse.working(message: "Usuário criado com sucesso");

@@ -34,7 +34,7 @@ class _VideoPageState extends State<VideoPage> {
         title: Text(car.nome),
       ),
       body: Center(
-        child: _controller.value.initialized
+        child: _controller.value.isInitialized
             ? AspectRatio(
           aspectRatio: _controller.value.aspectRatio,
           child: VideoPlayer(_controller),

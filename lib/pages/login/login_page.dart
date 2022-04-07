@@ -8,7 +8,7 @@ import 'package:cars/widgets/app_text.dart';
 import 'package:cars/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
+// import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 import 'cadastro_page.dart';
 
@@ -27,19 +27,19 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
 
-      RemoteConfig.instance.then((remoteConfig){
-      remoteConfig.setConfigSettings(RemoteConfigSettings(debugMode: true));
-
-      try {
-        remoteConfig.fetch(expiration: const Duration(minutes: 1));
-        remoteConfig.activateFetched();
-      } catch (error) {
-        print("Remote Config: $error");
-      }
-
-      final mensagem = remoteConfig.getString("mensagem");
-      print('Mensagem: $mensagem');
-    });
+    //   RemoteConfig.instance.then((remoteConfig){
+    //   remoteConfig.setConfigSettings(RemoteConfigSettings(debugMode: true));
+    //
+    //   try {
+    //     remoteConfig.fetch(expiration: const Duration(minutes: 1));
+    //     remoteConfig.activateFetched();
+    //   } catch (error) {
+    //     print("Remote Config: $error");
+    //   }
+    //
+    //   final mensagem = remoteConfig.getString("mensagem");
+    //   print('Mensagem: $mensagem');
+    // });
 
   }
 
