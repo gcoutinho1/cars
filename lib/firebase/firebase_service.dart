@@ -21,6 +21,7 @@ class FirebaseService {
       print("Firebase Nome: ${fUser.displayName}");
       print("Firebase Email: ${fUser.email}");
       print("Firebase Foto: ${fUser.photoURL}");
+      // saveUser();
 
       // Cria um usuario do app
       final user = Users(
@@ -32,7 +33,7 @@ class FirebaseService {
       user.save();
 
       // Salva no Firestore
-      saveUser(user);
+      saveUser(fUser);
 
       // Resposta genérica
       return ApiResponse.working();
@@ -63,6 +64,7 @@ class FirebaseService {
       print("Firebase Nome: ${fUser.displayName}");
       print("Firebase Email: ${fUser.email}");
       print("Firebase Foto: ${fUser.photoURL}");
+      // user.save();
 
       // // Cria um usuario do app
       final user = Users(
@@ -71,10 +73,11 @@ class FirebaseService {
         email: fUser.email,
         urlFoto: fUser.photoURL,
       );
+      //salva o user na api
       user.save();
 
       // Salva no Firestore
-      // saveUser(fUser);
+      saveUser(fUser);
 
       // Resposta genérica
       return ApiResponse.working();
@@ -84,16 +87,18 @@ class FirebaseService {
     }
   }
 
-  // salva o usuario na collection de usuarios logados
-  void saveUser(Users fUser) async {
-    User user = await FirebaseAuth.instance.currentUser;
+  // salva o usuario na collection de usuarios logados no firebase
+  // metodo atualizado depois da atualização do flutter + plugins
+  // estava utilizando refUser.set no lugar de refUser.update! com o .set nao adicionava os carros nos favoritos de forma separada por usuário.
+  static void saveUser(User fUser) async {
+    User fUser = await FirebaseAuth.instance.currentUser;
     if (fUser != null) {
-      firebaseUserUid = user.uid;
+      firebaseUserUid = fUser.uid;
       DocumentReference refUser =
-          FirebaseFirestore.instance.collection("users").doc(firebaseUserUid);
+          FirebaseFirestore.instance.collection('users').doc(firebaseUserUid);
       refUser.update({
-        'nome': user.displayName,
-        'email': user.email,
+        'nome': fUser.displayName,
+        'email': fUser.email,
       });
     }
   }
@@ -109,11 +114,10 @@ class FirebaseService {
       print("Firebase Foto: ${fUser.photoURL}");
 
       // Dados para atualizar o usuário
-      final userUpdateInfo = UserInfo;
+      // final userUpdateInfo = FirebaseAuth.instance.currentUser.updateProfile;
       fUser.updateDisplayName(nome);
-      fUser.updateProfile(photoURL: "https://s3-sa-east-1.amazonaws.com/livetouch-temp/livrows/foto.png");
-
-      // fUser.updatePhotoURL(userUpdateInfo);
+      fUser.updatePhotoURL(
+              "https://s3-sa-east-1.amazonaws.com/livetouch-temp/livrows/foto.png");
 
       // Resposta genérica
       return ApiResponse.working(message: "Usuário criado com sucesso");

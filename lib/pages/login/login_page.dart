@@ -6,9 +6,13 @@ import 'package:cars/utils/alert_dialog.dart';
 import 'package:cars/utils/nav.dart';
 import 'package:cars/widgets/app_text.dart';
 import 'package:cars/widgets/button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
+
 // import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'cadastro_page.dart';
 
@@ -23,9 +27,21 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _bloc = LoginBloc();
 
+  // User fUser;
+  // final FirebaseMessaging _firebaseMessaging =
+  //     FirebaseMessaging as FirebaseMessaging;
+  // var showForm = false;
+
   @override
   void initState() {
     super.initState();
+    Firebase.initializeApp().whenComplete(() => print('Firebase inicializado'));
+    FirebaseMessaging.instance.getToken().then((value) {
+      String token = value;
+      print("TOKEN: $token");
+    });
+
+    setState(() {});
 
     //   RemoteConfig.instance.then((remoteConfig){
     //   remoteConfig.setConfigSettings(RemoteConfigSettings(debugMode: true));
@@ -40,7 +56,6 @@ class _LoginPageState extends State<LoginPage> {
     //   final mensagem = remoteConfig.getString("mensagem");
     //   print('Mensagem: $mensagem');
     // });
-
   }
 
   @override

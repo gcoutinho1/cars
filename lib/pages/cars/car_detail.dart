@@ -43,11 +43,11 @@ class _CarDetailState extends State<CarDetail> {
         });
       }
     });
-    // FavoriteService.isFavorite(car).then((bool favorite) {
-    //   setState(() {
-    //     color = favorite ? Colors.red : Colors.grey;
-    //   });
-    // });
+    FavoriteService.isFavorite(car).then((bool favorite) {
+      setState(() {
+        color = favorite ? Colors.red : Colors.grey;
+      });
+    });
     _descriptionBloc.loadDescription();
   }
 
@@ -166,13 +166,13 @@ class _CarDetailState extends State<CarDetail> {
         break;
     }
   }
-
-    void _onClickFavorite() async {
-    bool favorite = await FavoriteService.favoritar(context, car);
-    setState(() {
-      color = favorite ? Colors.red : Colors.grey;
-    });
-  }
+  //   //metodo pra salvar na Api
+  //   void _onClickFavorite() async {
+  //   bool favorite = await FavoriteService.favoritar(context, car);
+  //   setState(() {
+  //     color = favorite ? Colors.red : Colors.grey;
+  //   });
+  // }
 
     void _onClickFirebaseFavorite() async {
     final service = FirebaseFavoriteService();

@@ -32,10 +32,10 @@ class _FavoritePageState extends State<FavoritePage>
   Widget build(BuildContext context) {
     super.build(context);
 
-    final service = FirebaseFavoriteService();
+    // final service = FirebaseFavoriteService();
 
     return StreamBuilder<QuerySnapshot>(
-      stream: service.getCars(),
+      stream: FirebaseFavoriteService().stream,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return TextError("Não foi possível buscar os carros");
@@ -47,8 +47,9 @@ class _FavoritePageState extends State<FavoritePage>
           );
         }
 
-        List<Cars> carros =
-            service.toList(snapshot);
+        List<Cars> carros = snapshot.data.docs.map((DocumentSnapshot document){
+          return Cars.fromMap(document.data());
+        }).toList();
 
         return CarsListView(carros);
       },

@@ -48,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-
+    Firebase.initializeApp();
     return Container(
       color: Colors.grey[900],
       child: Center(
