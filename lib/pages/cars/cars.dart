@@ -48,6 +48,17 @@ class Cars extends Entity {
     longitude = map['longitude'];
   }
 
+  // Cars.fromJson(Map<String, dynamic> json) {
+  //   id = json['id'];
+  //   nome = json['nome'];
+  //   tipo = json['tipo'];
+  //   descricao = json['descricao'];
+  //   urlFoto = json['urlFoto'];
+  //   urlVideo = json['urlVideo'];
+  //   latitude = json['latitude'];
+  //   longitude = json['longitude'];
+  // }
+
   @override
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

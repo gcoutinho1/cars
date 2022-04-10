@@ -1,7 +1,10 @@
+import 'dart:html';
+
 import 'package:cars/pages/api_response.dart';
 import 'package:cars/pages/login/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -21,7 +24,7 @@ class FirebaseService {
       print("Firebase Nome: ${fUser.displayName}");
       print("Firebase Email: ${fUser.email}");
       print("Firebase Foto: ${fUser.photoURL}");
-      // saveUser();
+      saveUser(fUser);
 
       // Cria um usuario do app
       final user = Users(
@@ -91,7 +94,7 @@ class FirebaseService {
   // metodo atualizado depois da atualização do flutter + plugins
   // estava utilizando refUser.set no lugar de refUser.update! com o .set nao adicionava os carros nos favoritos de forma separada por usuário.
   static void saveUser(User fUser) async {
-    User fUser = await FirebaseAuth.instance.currentUser;
+    User fUser =  FirebaseAuth.instance.currentUser;
     if (fUser != null) {
       firebaseUserUid = fUser.uid;
       DocumentReference refUser =
@@ -99,6 +102,7 @@ class FirebaseService {
       refUser.update({
         'nome': fUser.displayName,
         'email': fUser.email,
+        'urlPhoto': fUser.photoURL,
       });
     }
   }
@@ -134,6 +138,16 @@ class FirebaseService {
       return ApiResponse.error(message: "Não foi possível criar um usuário.");
     }
   }
+  // deprecated method
+  // static Future<String> uploadFirebaseStorage(File file) async{
+  //   print("Upload para o StorageFirebase $file");
+  //   String fileName = path.basename(file.path);
+  //   final storageRef = FirebaseStorage.instance.ref().child(fileName);
+  //
+  //   final StorageTaskSnapshot task = await storageRef.putFile(file).whenComplete();
+  //   final String urlFoto = await task.ref.getDownloadURL();
+  //   return urlFoto;
+  // }
 
   Future<void> logout() async {
     // await FavoriteService().deleteCarros();
