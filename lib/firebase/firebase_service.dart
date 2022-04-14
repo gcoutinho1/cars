@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:cars/pages/api_response.dart';
 import 'package:cars/pages/login/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,7 +15,7 @@ class FirebaseService {
   Future<ApiResponse> login(String email, String senha) async {
     // final User user = _auth.currentUser;
     try {
-      // Login no Firebase
+      // Login Firebase
       UserCredential result =
           await _auth.signInWithEmailAndPassword(email: email, password: senha);
       final User fUser = result.user;
@@ -26,7 +24,7 @@ class FirebaseService {
       print("Firebase Foto: ${fUser.photoURL}");
       saveUser(fUser);
 
-      // Cria um usuario do app
+      // Create a user in app
       final user = Users(
         nome: fUser.displayName,
         login: fUser.email,
@@ -35,10 +33,10 @@ class FirebaseService {
       );
       user.save();
 
-      // Salva no Firestore
+      // Save in Firestore
       saveUser(fUser);
 
-      // Resposta genérica
+      // Generic answer
       return ApiResponse.working();
     } catch (error) {
       print("Firebase error ");
@@ -48,20 +46,20 @@ class FirebaseService {
 
   Future<ApiResponse> loginGoogle() async {
     try {
-      // Login com o Google
+      // Login with Gmail
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
 
       print("Google User: ${googleUser.email}");
 
-      // Credenciais para o Firebase
+      // Credentials for Firebase
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
-      // Login no Firebase
+      // Login Firebase
       UserCredential result = await _auth.signInWithCredential(credential);
       final User fUser = result.user;
       print("Firebase Nome: ${fUser.displayName}");
@@ -69,20 +67,20 @@ class FirebaseService {
       print("Firebase Foto: ${fUser.photoURL}");
       // user.save();
 
-      // // Cria um usuario do app
+      // Create an app user
       final user = Users(
         nome: fUser.displayName,
         login: fUser.email,
         email: fUser.email,
         urlFoto: fUser.photoURL,
       );
-      //salva o user na api
+      // save the user in the api
       user.save();
 
-      // Salva no Firestore
+      // save user in firestore
       saveUser(fUser);
 
-      // Resposta genérica
+      // Generic answer
       return ApiResponse.working();
     } catch (error) {
       print("Firebase error $error");
@@ -92,9 +90,9 @@ class FirebaseService {
 
   // salva o usuario na collection de usuarios logados no firebase
   // metodo atualizado depois da atualização do flutter + plugins
-  // estava utilizando refUser.set no lugar de refUser.update! com o .set nao adicionava os carros nos favoritos de forma separada por usuário.
+  // estava utilizando refUser.set no lugar de refUser.update // com o refUser.set nao adicionava os carros nos favoritos de forma separada por usuário.
   static void saveUser(User fUser) async {
-    User fUser =  FirebaseAuth.instance.currentUser;
+    User fUser = FirebaseAuth.instance.currentUser;
     if (fUser != null) {
       firebaseUserUid = fUser.uid;
       DocumentReference refUser =
@@ -109,7 +107,7 @@ class FirebaseService {
 
   Future<ApiResponse> cadastrar(String nome, String email, String senha) async {
     try {
-      // Usuario do Firebase
+      // User of Firebase
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: senha);
       final User fUser = result.user;
@@ -117,13 +115,13 @@ class FirebaseService {
       print("Firebase Email: ${fUser.email}");
       print("Firebase Foto: ${fUser.photoURL}");
 
-      // Dados para atualizar o usuário
+      // Data to update the user
       // final userUpdateInfo = FirebaseAuth.instance.currentUser.updateProfile;
       fUser.updateDisplayName(nome);
       fUser.updatePhotoURL(
-              "https://s3-sa-east-1.amazonaws.com/livetouch-temp/livrows/foto.png");
+          "https://s3-sa-east-1.amazonaws.com/livetouch-temp/livrows/foto.png");
 
-      // Resposta genérica
+      // Generic answer
       return ApiResponse.working(message: "Usuário criado com sucesso");
     } catch (error) {
       print(error);
@@ -138,7 +136,10 @@ class FirebaseService {
       return ApiResponse.error(message: "Não foi possível criar um usuário.");
     }
   }
-  // deprecated method
+
+  //TODO: implement uploadFireBaseStorage
+  /// https://pub.dev/packages/firebase_storage
+  // deprecated method for upload in Firebase Storage bellow
   // static Future<String> uploadFirebaseStorage(File file) async{
   //   print("Upload para o StorageFirebase $file");
   //   String fileName = path.basename(file.path);

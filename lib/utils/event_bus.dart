@@ -2,9 +2,7 @@ import 'dart:async';
 
 import 'package:provider/provider.dart';
 
-class Event{
-
-}
+class Event {}
 
 class EventBus {
   final _streamController = StreamController<Event>.broadcast();

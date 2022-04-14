@@ -6,6 +6,7 @@ import 'package:cars/utils/sql/entity.dart';
 class CarsEvent extends Event {
   // save, delete
   String action;
+
   // classicos, esportivos, luxo
   String tipo;
 
@@ -72,7 +73,8 @@ class Cars extends Entity {
     data['longitude'] = this.longitude;
     return data;
   }
-  String toJson(){
+
+  String toJson() {
     String json = convert.json.encode(toMap());
     return json;
   }
@@ -80,7 +82,5 @@ class Cars extends Entity {
   @override
   String toString() {
     return 'Carro{id: $id, nome: $nome, tipo: $tipo, desc: $descricao}';
-
   }
-
 }

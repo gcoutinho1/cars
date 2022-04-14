@@ -4,6 +4,7 @@ import 'package:video_player/video_player.dart';
 
 class VideoPage extends StatefulWidget {
   final Cars car;
+
   VideoPage(this.car);
 
   @override
@@ -12,13 +13,13 @@ class VideoPage extends StatefulWidget {
 
 class _VideoPageState extends State<VideoPage> {
   VideoPlayerController _controller;
+
   Cars get car => widget.car;
 
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.network(
-        car.urlVideo)
+    _controller = VideoPlayerController.network(car.urlVideo)
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {
@@ -36,9 +37,9 @@ class _VideoPageState extends State<VideoPage> {
       body: Center(
         child: _controller.value.isInitialized
             ? AspectRatio(
-          aspectRatio: _controller.value.aspectRatio,
-          child: VideoPlayer(_controller),
-        )
+                aspectRatio: _controller.value.aspectRatio,
+                child: VideoPlayer(_controller),
+              )
             : Container(),
       ),
       floatingActionButton: FloatingActionButton(

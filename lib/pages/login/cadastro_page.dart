@@ -20,6 +20,7 @@ class _CadastroPageState extends State<CadastroPage> {
   final _formKey = GlobalKey<FormState>();
 
   var _progress = false;
+
   @override
   void initState() {
     super.initState();
@@ -127,7 +128,6 @@ class _CadastroPageState extends State<CadastroPage> {
       _progress = true;
     });
 
-
     final service = FirebaseService();
     final ApiResponse response = await service.cadastrar(nome, email, senha);
     if (response.working) {
@@ -145,4 +145,3 @@ class _CadastroPageState extends State<CadastroPage> {
     push(context, LoginPage(), replace: true);
   }
 }
-

@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     setState(() {});
-
+    /** RemoteConfig of Firebase**/
     //   RemoteConfig.instance.then((remoteConfig){
     //   remoteConfig.setConfigSettings(RemoteConfigSettings(debugMode: true));
     //
@@ -100,9 +100,6 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: 20,
             ),
-            // Center(
-            //        child: CircularProgressIndicator(),
-            //      )
             StreamBuilder<bool>(
                 stream: _bloc.stream,
                 builder: (context, snapshot) {

@@ -5,7 +5,7 @@ class Favorite extends Entity {
   int id;
   String nome;
 
-  Favorite.fromCar(Cars c){
+  Favorite.fromCar(Cars c) {
     id = c.id;
     nome = c.nome;
   }
@@ -22,6 +22,4 @@ class Favorite extends Entity {
     data['nome'] = this.nome;
     return data;
   }
-
-
 }

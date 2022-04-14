@@ -21,7 +21,7 @@ class CarsBloc {
       }
 
       List<Cars> cars = await CarsApi.getCars(tipo);
-      if(cars.isNotEmpty){
+      if (cars.isNotEmpty) {
         final dao = CarDAO();
         // save cars
         cars.forEach(dao.save);

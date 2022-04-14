@@ -21,10 +21,10 @@ class CarsListView extends StatelessWidget {
           Cars c = cars[index];
 
           return InkWell(
-            onTap: (){
+            onTap: () {
               _onClickCar(context, c);
             },
-            onLongPress: (){
+            onLongPress: () {
               _onLongClickCar(context, c);
             },
             child: Card(
@@ -36,7 +36,8 @@ class CarsListView extends StatelessWidget {
                   children: [
                     Center(
                       child: CachedNetworkImage(
-                        imageUrl: c.urlFoto ?? "https://images.pexels.com/photos/8740896/pexels-photo-8740896.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+                        imageUrl: c.urlFoto ??
+                            "https://images.pexels.com/photos/8740896/pexels-photo-8740896.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
                         width: 250,
                       ),
                     ),
@@ -62,7 +63,7 @@ class CarsListView extends StatelessWidget {
                           onPressed: () {
                             Share.share(c.urlFoto);
                           },
-                          child: Text('SHARE'),
+                          child: Text('COMPARTILHAR'),
                         ),
                       ],
                     ),
@@ -76,35 +77,41 @@ class CarsListView extends StatelessWidget {
     );
   }
 
-      _onClickCar(context, Cars c) {
-        push(context, CarDetail(c));
+  _onClickCar(context, Cars c) {
+    push(context, CarDetail(c));
   }
 
-    _onLongClickCar(BuildContext context, Cars c) {
-    showModalBottomSheet(context: context, builder: (context){
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Text(c.nome, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
-          ),
-          ListTile(title: Text("Detalhes"),
-            onTap: (){
-            pop(context);
-            _onClickCar(context, c);
-            },
-          ),
-          ListTile(title: Text("Compartilhar"),
-            onTap: (){
-              pop(context);
-              _onClickShare(context, c);
-            },
-          )
-        ],
-      );
-    });
-
+  _onLongClickCar(BuildContext context, Cars c) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Text(
+                  c.nome,
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+              ),
+              ListTile(
+                title: Text("Detalhes"),
+                onTap: () {
+                  pop(context);
+                  _onClickCar(context, c);
+                },
+              ),
+              ListTile(
+                title: Text("Compartilhar"),
+                onTap: () {
+                  pop(context);
+                  _onClickShare(context, c);
+                },
+              )
+            ],
+          );
+        });
   }
 
   void _onClickShare(BuildContext context, Cars c) {

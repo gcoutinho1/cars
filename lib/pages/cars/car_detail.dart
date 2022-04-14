@@ -28,16 +28,16 @@ class _CarDetailState extends State<CarDetail> {
   final _descriptionBloc = DescriptionBloc();
 
   Color color = Colors.grey;
+
   Cars get car => widget.car;
   bool _isFavorite = false;
-
 
   @override
   void initState() {
     super.initState();
     final service = FirebaseFavoriteService();
-    service.exists(car).then((b){
-      if(b) {
+    service.exists(car).then((b) {
+      if (b) {
         setState(() {
           _isFavorite = b;
         });
@@ -142,12 +142,13 @@ class _CarDetailState extends State<CarDetail> {
 
   void _onClickMap() {}
 
-    _onClickVideo () {
-    if (car.urlVideo != null && car.urlVideo.isNotEmpty){
+  _onClickVideo() {
+    if (car.urlVideo != null && car.urlVideo.isNotEmpty) {
       // launch(car.urlVideo);
       push(context, VideoPage(car));
     } else {
-      alert(context,
+      alert(
+        context,
         "Este carro não possui video",
       );
     }
@@ -166,6 +167,7 @@ class _CarDetailState extends State<CarDetail> {
         break;
     }
   }
+
   //   //metodo pra salvar na Api
   //   void _onClickFavorite() async {
   //   bool favorite = await FavoriteService.favoritar(context, car);
@@ -174,7 +176,7 @@ class _CarDetailState extends State<CarDetail> {
   //   });
   // }
 
-    void _onClickFirebaseFavorite() async {
+  void _onClickFirebaseFavorite() async {
     final service = FirebaseFavoriteService();
     final exists = await service.addFavorite(car);
     setState(() {

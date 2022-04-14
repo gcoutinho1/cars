@@ -112,7 +112,6 @@ class _CarFormPageState extends State<CarFormPage> {
           ),
           AppButton(
             "Salvar",
-            // tinha adicionado _onClickSave() e gerou o erro type 'Future<dynamic>' is not a subtype of type Funcion!
             onPressed: _onClickSave,
             showProgress: _showProgress,
           ),
@@ -123,17 +122,21 @@ class _CarFormPageState extends State<CarFormPage> {
 
   _headerFoto() {
     return InkWell(
-        onTap: _onClickPhoto,
-        child: _file != null ? Image.file(_file, height: 150,)
-            : car != null
-            ? CachedNetworkImage(
-          imageUrl: car.urlFoto,
-        )
-            : Image.asset(
-          "assets/images/camera.png",
-          height: 150,
-        ),
-        );
+      onTap: _onClickPhoto,
+      child: _file != null
+          ? Image.file(
+              _file,
+              height: 150,
+            )
+          : car != null
+              ? CachedNetworkImage(
+                  imageUrl: car.urlFoto,
+                )
+              : Image.asset(
+                  "assets/images/camera.png",
+                  height: 150,
+                ),
+    );
   }
 
   _radioTipo() {
@@ -234,11 +237,10 @@ class _CarFormPageState extends State<CarFormPage> {
     print("Fim.");
   }
 
-
   void _onClickPhoto() async {
     final ImagePicker _picker = ImagePicker();
     XFile file = await _picker.pickImage(source: ImageSource.gallery);
-    if(file != null){
+    if (file != null) {
       setState(() {
         // this._file = file;
       });

@@ -9,12 +9,11 @@ class DescriptionBloc {
   Stream<String> get stream => _streamController.stream;
 
   loadDescription() async {
-      String s = description ?? await DescriptionApi.getDescription();
-      description = s;
-      _streamController.add(s);
+    String s = description ?? await DescriptionApi.getDescription();
+    description = s;
+    _streamController.add(s);
 
-      // _streamController.addError(e);
-
+    // _streamController.addError(e);
   }
 
   void dispose() {

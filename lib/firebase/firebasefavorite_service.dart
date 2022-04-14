@@ -4,23 +4,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class FirebaseFavoriteService {
-  // getCars() => _cars.snapshots();
   // code bellow is to save only collection 'carros'
   // get _cars => FirebaseFirestore.instance.collection('carros');
   // to save a colletion inside users in firebase
   get _users => FirebaseFirestore.instance.collection('users');
+
   //If you logged directly into the login API, save directly to the cars collection
-  /**comentei pra fazer um teste, descomentar depois**/
+  /**comentei a linha abaixo pra fazer um teste**/
   // get _cars => firebaseUserUid != null ? _users.document(firebaseUserUid).colletion('carros') : FirebaseFirestore.instance.collection('carros');
   get stream => _cars.snapshots();
 
   CollectionReference get _cars {
     String uid = firebaseUserUid;
-    DocumentReference refUser = FirebaseFirestore.instance.collection('users').doc(uid);
+    DocumentReference refUser =
+        FirebaseFirestore.instance.collection('users').doc(uid);
     return refUser.collection('carros');
   }
 
-  /**testar sem esse codigo**/
   List<Cars> toList(AsyncSnapshot<QuerySnapshot> snapshot) {
     return snapshot.data.docs
         .map((document) => Cars.fromMap(document.data()))
