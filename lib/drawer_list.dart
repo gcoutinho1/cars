@@ -2,6 +2,7 @@ import 'package:cars/firebase/firebase_service.dart';
 import 'package:cars/pages/fav/favorite_page.dart';
 import 'package:cars/pages/login/login_page.dart';
 import 'package:cars/pages/login/user.dart';
+import 'package:cars/pages/site/site_page.dart';
 import 'package:cars/utils/nav.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,15 @@ class DrawerList extends StatelessWidget {
             onTap: () {
               push(context, FavoritePage());
             }
+          ),
+          ListTile(
+            leading: Icon(Icons.web),
+            title: Text("Site"),
+            subtitle: Text("Conheça o nosso site"),
+            trailing: Icon(Icons.arrow_forward),
+            onTap: (){
+              _onClickSite(context);
+            },
           ),
           ListTile(
             leading: Icon(Icons.help),
@@ -63,5 +73,10 @@ class DrawerList extends StatelessWidget {
     FirebaseService().logout();
     Navigator.pop(context);
     push(context, LoginPage(), replace: true);
+  }
+
+  void _onClickSite(context) {
+    pop(context);
+    push(context, SitePage(), replace: false);
   }
 }
