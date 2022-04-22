@@ -112,23 +112,25 @@ class _LoginPageState extends State<LoginPage> {
             Container(
               height: 46,
               margin: EdgeInsets.only(top: 20),
-              child: GoogleSignInButton(
-                onPressed: _onClickGoogle,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  GoogleSignInButton(
+                    centered: true,
+                    borderRadius: defaultBorderRadius,
+                    text: "Acesse com sua conta Google",
+                    onPressed: _onClickGoogle,
+                  ),
+                ],
               ),
             ),
             Container(
               height: 46,
               margin: EdgeInsets.only(top: 20),
-              child: InkWell(
-                onTap: _onClickCadastrar,
-                child: Text(
-                  "Cadastre-se",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 22,
-                      color: Colors.red,
-                      decoration: TextDecoration.underline),
-                ),
+              child: AppButton(
+                "Cadastre-se",
+                onPressed: _onClickCadastrar,
               ),
             ),
           ],

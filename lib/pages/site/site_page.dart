@@ -8,7 +8,6 @@ class SitePage extends StatefulWidget {
 
 class _SitePageState extends State<SitePage> {
   bool _showProgress = true;
-  //TODO: implements Hybrid Composition for better performance
   /// https://github.com/flutter/flutter/wiki/Hybrid-Composition
   @override
   Widget build(BuildContext context) {

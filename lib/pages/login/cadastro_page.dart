@@ -94,14 +94,18 @@ class _CadastroPageState extends State<CadastroPage> {
   }
 
   String _validateRegisterName(String text) {
-    if (text.isEmpty || text.length < 2) {
+    if (text.isEmpty || text.length < 3) {
       return "Coloque um nome valido";
     }
     return null;
   }
 
+
   String _validateRegisterEmail(String text) {
+    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(text);
     if (text.isEmpty) {
+      return "Coloque um email";
+    } if (!emailValid){
       return "Coloque um email valido";
     }
     return null;

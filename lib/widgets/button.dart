@@ -9,9 +9,8 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      mainAxisSize: MainAxisSize.max,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         ElevatedButton(
@@ -23,11 +22,11 @@ class AppButton extends StatelessWidget {
           ),
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
-            primary: Colors.pink,
+            primary: Colors.grey[800],
             onPrimary: Colors.white,
             shape: const BeveledRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(7))),
-            side: BorderSide(color: Colors.redAccent),
+            side: BorderSide(color: Colors.grey[500]),
             minimumSize: Size(150, 30),
           ),
         ),

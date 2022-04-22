@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage>
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Carros"),
+        title: Text("Cars"),
         bottom: TabBar(
           controller: _tabController,
           tabs: [

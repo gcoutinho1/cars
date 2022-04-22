@@ -119,7 +119,7 @@ class FirebaseService {
       // final userUpdateInfo = FirebaseAuth.instance.currentUser.updateProfile;
       fUser.updateDisplayName(nome);
       fUser.updatePhotoURL(
-          "https://s3-sa-east-1.amazonaws.com/livetouch-temp/livrows/foto.png");
+          "https://image.shutterstock.com/image-vector/man-icon-vector-260nw-1040084344.jpg");
 
       // Generic answer
       return ApiResponse.working(message: "Usuário criado com sucesso");

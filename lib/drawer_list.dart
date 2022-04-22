@@ -21,15 +21,15 @@ class DrawerList extends StatelessWidget {
                 User user = snapshot.data;
                 return user != null ? _header(user) : Container();
               }),
-          ListTile(
-            leading: Icon(Icons.star),
-            title: Text("Favoritos"),
-            subtitle: Text("Adicione aos favoritos"),
-            trailing: Icon(Icons.arrow_forward),
-            onTap: () {
-              push(context, FavoritePage());
-            }
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.star),
+          //   title: Text("Favoritos"),
+          //   subtitle: Text("Adicione aos favoritos"),
+          //   trailing: Icon(Icons.arrow_forward),
+          //   onTap: () {
+          //     push(context, FavoritePage());
+          //   }
+          // ),
           ListTile(
             leading: Icon(Icons.web),
             title: Text("Site"),
