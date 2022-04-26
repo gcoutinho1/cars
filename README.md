@@ -54,6 +54,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 #### 📘 Aprendizado
 
 Desenvolvendo esse projeto eu aprendi ou reforcei alguns conhecimentos que já tinha com:
+- validações de formulários com rEgex
 - Navigation and routing
 - Shared Preferences
 - Futures e Streams
