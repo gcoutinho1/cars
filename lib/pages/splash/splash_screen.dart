@@ -16,10 +16,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Future.delayed(Duration(seconds: 3),(){
-    //   push(context, LoginPage());
-    //
-    // });
+    Future.delayed(Duration(seconds: 3),(){
+      push(context, LoginPage());
+
+    });
 
     Future futureA = DatabaseHelper.getInstance().db;
     Future futureB = Future.delayed(Duration(seconds: 3));
